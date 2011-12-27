@@ -9,6 +9,7 @@ import java.util.*;
 
 import ch.epfl.codimsd.config.AppConfig;
 import ch.epfl.codimsd.exceptions.CodimsException;
+import ch.epfl.codimsd.helper.FileUtils;
 import ch.epfl.codimsd.qeef.Metadata;
 import ch.epfl.codimsd.qeef.QueryManager;
 import ch.epfl.codimsd.qeef.QueryManagerImpl;
@@ -19,8 +20,6 @@ import ch.epfl.codimsd.query.ResultSet;
 import ch.epfl.codimsd.query.sparql.JSONOutput;
 import ch.epfl.codimsd.query.sparql.ResultOutput;
 import ch.epfl.codimsd.query.sparql.XMLOutput;
-
-import models.*;
 
 public class Application extends Controller {
 
@@ -93,6 +92,31 @@ public class Application extends Controller {
 			index();
 		}
     	
+    }
+    
+    // To test: http://localhost:9001/show
+    public static void show(Integer qep) {
+    	try {
+			String fileContents = FileUtils.readFile("codims-home/QEP/QEPInitialQEF_SPARQL_01.xml");
+			render(fileContents);
+		} catch (IOException e) {
+			flash.error(e.getMessage());
+			Logger.error(e.getMessage(), e);
+			index();
+		}
+    }
+
+    // To test: http://localhost:9001/save?fileName=teste.txt&fileContents=oi 
+    public static void save(String fileName, String fileContents) {
+    	try {
+			FileUtils.writeFile(fileName, fileContents);
+			flash.success("File " + fileName + " saved successfully.");
+			index();
+		} catch (IOException e) {
+			flash.error(e.getMessage());
+			Logger.error(e.getMessage(), e);
+			index();
+		}
     }
     
 }
