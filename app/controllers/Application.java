@@ -113,7 +113,7 @@ public class Application extends Controller {
 		}
     }
 
-    // To test: http://localhost:9001/save?fileName=teste.txt&fileContents=oi 
+    // To test: http://localhost:9001/save/teste.txt/oi 
     public static void save(String fileName, String fileContents) {
     	try {
 			FileUtils.writeFile(fileName, fileContents);
