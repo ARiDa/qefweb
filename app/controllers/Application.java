@@ -94,12 +94,19 @@ public class Application extends Controller {
     	
     }
     
-    // To test: http://localhost:9001/show
-    public static void show(Integer qep) {
+    // To test: http://localhost:9001/show/11
+    public static void show(Integer id) {
     	try {
-			String fileContents = FileUtils.readFile("codims-home/QEP/QEPInitialQEF_SPARQL_01.xml");
+    		QEPInfo qepInfo = QEPInfo.getQEPInfo(id);
+    		
+    		if (qepInfo == null) {
+    			throw new IllegalArgumentException("Could not find qep with id = " + id);
+    		}
+
+			String fileContents = FileUtils.readFile(AppConfig.CODIMS_HOME + qepInfo.getPath());
 			render(fileContents);
-		} catch (IOException e) {
+			
+		} catch (Exception e) {
 			flash.error(e.getMessage());
 			Logger.error(e.getMessage(), e);
 			index();
