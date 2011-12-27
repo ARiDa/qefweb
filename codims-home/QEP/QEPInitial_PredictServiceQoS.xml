@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+********************************************************************************************************
+The local Initial Query Execution Plan (QEP), ie. no remote operations,
+for running the PredictServiceQoSOperator
+********************************************************************************************************
+-->
+<QEPTemplate xmlns="http://giga03.lncc.br/DIP/WP4/CoDIMS-D" xmlns:op="http://giga03.lncc.br/DIP/WP4/CoDIMS-D/Operator" xmlns:qep="http://giga03.lncc.br/DIP/WP4/CoDIMS-D/QEP">
+	<qep:QEP type="Initial">
+	
+		<op:Operator id="1" prod="2" type="local" parallelizable="true">
+			<Name>PredictServiceQoSOperator</Name>
+			<ParameterList>
+			</ParameterList>
+		</op:Operator>
+
+		<op:Operator id="2" prod="0" type="Scan" numberOfTuples="?">
+			<Name>ScanDiscovery</Name>
+			<ParameterList>
+					<DataSourceName>RelationalDataSource</DataSourceName>
+					<IRI>IRI_OPERATORS_LBD7</IRI>
+					<SQLQuery>SELECT * FROM ServiceInterface</SQLQuery>
+			</ParameterList>
+		</op:Operator>
+		
+
+	</qep:QEP>
+</QEPTemplate>
+
+
+

@@ -1,0 +1,144 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+<script language="Javascript" type="text/javascript">
+		// initialisation
+		editAreaLoader.init({
+			id: "example_1"	// id of the textarea to transform		
+			,start_highlight: true	// if start with highlight
+			,allow_resize: "both"
+			,allow_toggle: true
+			,word_wrap: true
+			,language: "en"
+			,syntax: "php"	
+		});
+		
+
+		
+		// callback functions
+		function my_save(id, content){
+			alert("Here is the content of the EditArea '"+ id +"' as received by the save callback function:\n"+content);
+		}
+		
+		function my_load(id){
+			editAreaLoader.setValue(id, "The content is loaded from the load_callback function into EditArea");
+		}
+		
+		function test_setSelectionRange(id){
+			editAreaLoader.setSelectionRange(id, 100, 150);
+		}
+		
+		function test_getSelectionRange(id){
+			var sel =editAreaLoader.getSelectionRange(id);
+			alert("start: "+sel["start"]+"\nend: "+sel["end"]); 
+		}
+		
+		function test_setSelectedText(id){
+			text= "[REPLACED SELECTION]"; 
+			editAreaLoader.setSelectedText(id, text);
+		}
+		
+		function test_getSelectedText(id){
+			alert(editAreaLoader.getSelectedText(id)); 
+		}
+		
+		function editAreaLoaded(id){
+			if(id=="example_2")
+			{
+				open_file1();
+				open_file2();
+			}
+		}
+		
+		function open_file1()
+		{
+			var new_file= {id: "to\\ é # € to", text: "$authors= array();\n$news= array();", syntax: 'php', title: 'beautiful title'};
+			editAreaLoader.openFile('example_2', new_file);
+		}
+		
+		function open_file2()
+		{
+			var new_file= {id: "Filename", text: "<a href=\"toto\">\n\tbouh\n</a>\n<!-- it's a comment -->", syntax: 'html'};
+			editAreaLoader.openFile('example_2', new_file);
+		}
+		
+		function close_file1()
+		{
+			editAreaLoader.closeFile('example_2', "to\\ é # € to");
+		}
+		
+		function toogle_editable(id)
+		{
+			editAreaLoader.execCommand(id, 'set_editable', !editAreaLoader.execCommand(id, 'is_editable'));
+		}
+	
+	</script>
+
+
+
+
+<h1>QEF Web</h1>
+
+#{if flash.error}
+    <p style="color:#c00">
+        ${flash.error}
+    </p>
+#{/if}
+
+
+<div id="content">
+	<table align="center">
+	<tr class="title">
+		<th>ID</th>
+		<th>Description</th>
+		<th colspan="4">Actions</th>
+	</tr>
+	#{list items:qeps, as:'qep' }
+	<tr class="list">
+		<td>${qep.id}</td>
+		<td>${qep.description}</td>
+		<td>View</td>
+		<td><a href="@{Application.executeQuery(qep.id, "html")}">HTML</a></td>
+		<td><a href="@{Application.executeQuery(qep.id, "xml")}"><img alt="XML" src="@{'/public/images/xml.png'}"/></a></td>
+		<td><a href="@{Application.executeQuery(qep.id, "json")}"><img alt="JSON" src="@{'/public/images/json.png'}"/></a></td>
+	</tr>
+	#{/list}
+	</table>
+</div>
+
+
+
+<h2>Form</h2>
+
+		<textarea id="example_1" style="height: 350px; width: 100%;" name="test_1">
+<?php	
+	$authors	= array();
+	$news		= array();
+	/* this is a long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long comment for showing word-wrap feature */
+	$query	= "SELECT author, COUNT(id) as 'nb_news' FROM news_messages GROUP BY author";
+	$result	= mysql_query($query, $DBnews);
+	while( $line = mysql_fetch_assoc($result) ){
+		$authors[$line["author"]]	= $line["author"];
+		$news[$line["author"]]		= $line['nb_news'];
+	}
+	
+	$list= sprintf("('%s')", implode("', '", $authors));
+	
+	
+	$query="SELECT p.people_id, p.name, p.fname, p.status, team_name, t.leader_id=p.people_id as 'team_leader', w.name as 'wp_name', w.type
+			FROM people p, teams t, wppartis wp, wps w
+			WHERE p.people_id IN $list AND p.org_id=t.team_id AND wp.team_id=t.team_id AND wp.wp_id=w.wp_id 
+			GROUP BY p.people_id";
+	if(isset($_GET["order"]) && $_GET["order"]!="nb_news")
+		$query.=" ORDER BY ".$_GET["order"];
+		
+	$result=mysql_query($query, $DBkal);
+	while($line = mysql_fetch_assoc($result)){
+		printf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>", $line["name"], $line["fname"],
+			$news[$line["people_id"]], $line["status"], $line["team_name"], ($line["team_leader"]=="1")?"yes":"no", $line["type"], $line["wp_name"]);
+	
+	}
+	printf("</table>");
+?>
+		</textarea>
+	
