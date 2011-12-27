@@ -61,6 +61,9 @@ public class Application extends Controller {
 			
 			Metadata mt = result.getResultMetadata();
 			ResultSet rs = result.getResultSet();
+
+			response.setHeader("Cache-Control", "no-cache");
+			response.setHeader("Pragma", "no-cache");
 			
 			ResultOutput output = null;
 			if (format.equals("html")) {
