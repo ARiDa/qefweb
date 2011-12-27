@@ -93,20 +93,47 @@ public class Application extends Controller {
 		}
     	
     }
-    
-    // To test: http://localhost:9001/show
-    public static void show(Integer qep) {
+
+    public static void show(Integer id) {
     	try {
-			String fileContents = FileUtils.readFile("codims-home/QEP/QEPInitialQEF_SPARQL_01.xml");
+    		QEPInfo qepInfo = QEPInfo.getQEPInfo(id);
+    		
+    		if (qepInfo == null) {
+    			throw new IllegalArgumentException("Could not find qep with id = " + id);
+    		}
+
+			String fileName = qepInfo.getPath();
+			String description = qepInfo.getDescription();
+    		String fileContents = FileUtils.readFile(AppConfig.CODIMS_HOME + fileName);
+			render(fileName, description, fileContents);
+			
+		} catch (Exception e) {
+			flash.error(e.getMessage());
+			Logger.error(e.getMessage(), e);
+			index();
+		}
+    }
+    
+    // To test: http://localhost:9001/edit/11
+    public static void edit(Integer id) {
+    	try {
+    		QEPInfo qepInfo = QEPInfo.getQEPInfo(id);
+    		
+    		if (qepInfo == null) {
+    			throw new IllegalArgumentException("Could not find qep with id = " + id);
+    		}
+
+			String fileContents = FileUtils.readFile(AppConfig.CODIMS_HOME + qepInfo.getPath());
 			render(fileContents);
-		} catch (IOException e) {
+			
+		} catch (Exception e) {
 			flash.error(e.getMessage());
 			Logger.error(e.getMessage(), e);
 			index();
 		}
     }
 
-    // To test: http://localhost:9001/save?fileName=teste.txt&fileContents=oi 
+    // To test: http://localhost:9001/save/teste.txt/oi 
     public static void save(String fileName, String fileContents) {
     	try {
 			FileUtils.writeFile(fileName, fileContents);

@@ -10,3 +10,4 @@ tmp/
 *.swp
 *.out
 teste.txt
+*.pid
