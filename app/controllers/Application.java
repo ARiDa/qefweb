@@ -93,9 +93,29 @@ public class Application extends Controller {
 		}
     	
     }
-    
-    // To test: http://localhost:9001/show/11
+
     public static void show(Integer id) {
+    	try {
+    		QEPInfo qepInfo = QEPInfo.getQEPInfo(id);
+    		
+    		if (qepInfo == null) {
+    			throw new IllegalArgumentException("Could not find qep with id = " + id);
+    		}
+
+			String fileName = qepInfo.getPath();
+			String description = qepInfo.getDescription();
+    		String fileContents = FileUtils.readFile(AppConfig.CODIMS_HOME + fileName);
+			render(fileName, description, fileContents);
+			
+		} catch (Exception e) {
+			flash.error(e.getMessage());
+			Logger.error(e.getMessage(), e);
+			index();
+		}
+    }
+    
+    // To test: http://localhost:9001/edit/11
+    public static void edit(Integer id) {
     	try {
     		QEPInfo qepInfo = QEPInfo.getQEPInfo(id);
     		

@@ -3,19 +3,14 @@ body {
   background: ;
   color: #4C5ED4;
   background-color: #EEE;
-  background-image: url(bg.png);
   background-repeat: repeat;
   font-family: "Lucida Grande", Verdana, sans-serif;
   border-bottom: 50px solid #2E3436;
   font-size: 14px;
 }
 
-
-#all{
-	text-align:center;
-}
-
 h1,h2{
+	text-align:center;
 	color: #353f47;
 }
 
@@ -31,6 +26,10 @@ a{
   text-shadow: none;
   background: rgba(255,255,255,0.35);
   border-radius: 3px;
+}
+
+pre{
+  color: #000;
 }
 
 table{
