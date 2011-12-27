@@ -5,6 +5,8 @@
 # Home page
 GET     /                                       Application.index
 GET		/results								Application.executeQuery
+GET		/show									Application.show
+GET		/save									Application.save
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
