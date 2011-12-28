@@ -1,55 +1,7 @@
 #{extends 'main.html' /}
 #{set title:'Home' /}
 
-<!-- EditArea Functions-->
-<script language="javascript" type="text/javascript">
-
-editAreaLoader.init({
-	id : "textarea_1"		
-	,syntax: "xml"			
-	,start_highlight: true		
-	,EA_load_callback: "editAreaLoaded"
-	,show_line_colors: true
-	,allow_toggle: false
-	,toolbar: "new_document, save, load, |, |, search, go_to_line, |, undo, redo, |, select_font, |, change_smooth_selection, highlight, reset_highlight, |, help"
-	,load_callback: "my_load"
-	,save_callback: "my_save"
-	
-});
-
-		function editAreaLoaded(id){
-			if(id=="textarea_1")
-			{
-				open_file1();
-				open_file2();
-			}
-		}
-		
-		function open_file1()
-		{
-			var new_file= {id: "to\\ é # € to", text: "$authors= array();\n$news= array();", syntax: 'php', title: 'beautiful title'};
-			editAreaLoader.openFile('example_2', new_file);
-		}
-		
-		function open_file2()
-		{
-			var new_file= {id: "Filename", text: "<a href=\"toto\">\n\tbouh\n</a>\n<!-- it's a comment -->", syntax: 'html'};
-			editAreaLoader.openFile('example_2', new_file);
-		}
-		
-		// callback functions
-		function my_save(id, content){
-			alert("Here is the content of the EditArea '"+ id +"' as received by the save callback function:\n"+content);
-		}
-		
-		function my_load(id){
-			editAreaLoader.setValue(id, "The content is loaded from the load_callback function into EditArea");
-		}
-		
-</script>
-
-
-<h1>QEF Web</h1>
+<a href="https://github.com/franzejr/qefweb" title="GitHub Repository"><img align="right" src="http://pystar.github.com/pystar/_static/img/forkme_right_darkblue_121621.png" height="90" width="90" /></a>
 
 #{if flash.error}
     <p style="color:#c00">
@@ -62,8 +14,10 @@ editAreaLoader.init({
     </p>
 #{/if}
 
-
 <div id="content">
+	<h1>QEF Web</h1>
+	
+	<h3>Plans</h3>
 	<table align="center">
 	<tr class="title">
 		<th>Description</th>
@@ -72,12 +26,20 @@ editAreaLoader.init({
 	#{list items:qeps, as:'qep' }
 	<tr class="list">
 		<td>${qep.description}</td>
-		<td><a href="@{Application.show(qep.id)}">Show</a></td>
-		<td><a href="@{Application.executeQuery(qep.id, "html")}"><img alt="HTML" src="@{'/public/images/html.png'}"/></a></td>
-		<td><a href="@{Application.executeQuery(qep.id, "xml")}"><img alt="XML" src="@{'/public/images/xml.png'}"/></a></td>
-		<td><a href="@{Application.executeQuery(qep.id, "json")}"><img alt="JSON" src="@{'/public/images/json.png'}"/></a></td>
+		<td><a href="@{Application.show(qep.id)}" title="Show"><img alt="Show" src="@{'/public/images/show.png'}"/></a></td>
+		<td><a href="@{Application.executeQuery(qep.id, "html")}" title="HTML"><img alt="HTML" src="@{'/public/images/html.png'}"/></a></td>
+		<td><a href="@{Application.executeQuery(qep.id, "xml")}" title="XML"><img alt="XML" src="@{'/public/images/xml.png'}"/></a></td>
+		<td><a href="@{Application.executeQuery(qep.id, "json")}" title="JSON"><img alt="JSON" src="@{'/public/images/json.png'}"/></a></td>
 	</tr>
 	#{/list}
 	</table>
+	
+	<div id="about">
+		<h3>About</h3>
+		<p>
+			The QEFWeb has been developed with the purpose to use the SPARQL...
+		
+		</p>
+	</div>
 </div>
 
