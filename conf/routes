@@ -4,10 +4,13 @@
 
 # Home page
 GET     /                                       Application.index
-GET		/results								Application.executeQuery
 GET		/edit/{id}								Application.edit
-GET		/save/{fileName}/{fileContents}			Application.save
 GET		/show/{id}								Application.show
+GET		/reload/{id}							Application.reload
+GET		/save/{fileName}/{fileContents}			Application.save
+GET		/results/{qep}/{format}					Application.executeQuery
+
+//qefweb.mooo.com/results?qep=13&format=html
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
