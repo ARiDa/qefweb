@@ -16,11 +16,39 @@
 
 
 <div id="content">
+	<div id="saveOptions" style="display:none" title="Save Options">
+	</div>
+
 	<form method="post">
-		<textarea id="textarea_1" name="content" cols="80" rows="15">
+		<textarea id="codeArea" name="content" cols="110" rows="40">
 			${fileContents}
 		</textarea>
-
 	</form>
+	
+
+	
 </div>
 
+
+<script type="text/javascript" language="javascript">
+			
+	$(document).ready(function() {
+			
+	
+				 $("#saveCode").click(function(event) {
+				 		alert("ehuahea");
+				 });
+		 	
+		 	function sendCode(){
+		 		
+		 		var code = $('#codeArea').html();
+		 		var queryName = $('#queryName').val();
+		 		var queryDescription = $('#queryDescription').val();
+		 		
+		 		$.get('/save/'+queryName+'/'+code);
+		 		
+		 	}
+	
+	});
+	
+</script>
