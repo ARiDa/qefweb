@@ -1,7 +1,7 @@
-Tue Dec 27 23:37:26 BRT 2011 : Apache Derby Network Server - 10.8.2.2 - (1181258) started and ready to accept connections on port 1527
+Wed Dec 28 09:43:57 BRT 2011 : Apache Derby Network Server - 10.8.2.2 - (1181258) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Tue Dec 27 23:37:26 BRT 2011:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-0134-8287-84db-00000207ffb0 
+Wed Dec 28 09:43:57 BRT 2011:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-0134-84b2-c971-000002c0c638 
 on database directory /home/franzejr/play-1.2.4/qefweb/codims-home/DerbyCatalog  with class loader sun.misc.Launcher$AppClassLoader@df6ccd 
 Loaded from file:/home/franzejr/play-1.2.4/qefweb/lib/derby.jar
 java.vendor=Sun Microsystems Inc.
