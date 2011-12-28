@@ -1,4 +1,7 @@
-
+/*
+CSS from the QEFWEb - Query Execution Plans using QEF
+Further informations: https://github.com/franzejr/qefweb
+*/
 body {
   background-image:url('bg.png');
   background-color: #EEEEEE;
@@ -7,10 +10,16 @@ body {
   font-size: 14px;
 }
 
+#topPage{
+	background-image: url('qef2.png');
+	background-color: #3B393F;
+	background-repeat: no-repeat;
+	height:86px;
+}
 
 #all{
   background: none repeat scroll 0 0 white;
-  border-top: 30px solid #3B393F;
+  border-top: 3px solid white;
   width:940px;
   min-height:250px;
   box-shadow:0px 5px 24px #888888;

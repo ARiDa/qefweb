@@ -1,41 +1,43 @@
+/*
+editArea functions - utilized by save and edit the codes
+Further informations: https://github.com/franzejr/qefweb
+*/
 editAreaLoader.init({
-			id : "textarea_1"		
+			id : "codeArea"		
 			,syntax: "xml"			
 			,start_highlight: true		
-			,EA_load_callback: "editAreaLoaded"
 			,show_line_colors: true
 			,allow_toggle: false
-			,toolbar: "new_document, save, load, |, |, search, go_to_line, |, undo, redo, |, select_font, |, change_smooth_selection, highlight, reset_highlight, |, help"
-			,load_callback: "my_load"
+			,toolbar: "save,|, search, go_to_line, |, undo, redo, |, select_font, |, change_smooth_selection, highlight, reset_highlight, |, help"
 			,save_callback: "my_save"
 
 		});
-
-		function editAreaLoaded(id){
-			if(id=="textarea_1")
-			{
-				open_file1();
-				open_file2();
-			}
-		}
 		
-		function open_file1()
-		{
-			var new_file= {id: "to\\ é # € to", text: "$authors= array();\n$news= array();", syntax: 'php', title: 'beautiful title'};
-			editAreaLoader.openFile('example_2', new_file);
-		}
-		
-		function open_file2()
-		{
-			var new_file= {id: "Filename", text: "<a href=\"toto\">\n\tbouh\n</a>\n<!-- it's a comment -->", syntax: 'html'};
-			editAreaLoader.openFile('example_2', new_file);
-		}
 		
 		// callback functions
 		function my_save(id, content){
-			alert("Here is the content of the EditArea '"+ id +"' as received by the save callback function:\n"+content);
+			
+			//Show the dialog to put the options
+			$('#saveOptions').dialog();
+			$('#saveOptions').dialog({ buttons: [
+						                                    {
+						                                        text: "Send",
+						                                        click: function() { 
+						                                        
+						                                        	
+																 		var code = $('#codeArea').html();
+																 		var queryName = $('#queryName').val();
+																 		var queryDescription = $('#queryDescription').val();
+																 		
+																 		$.get('/save/'+queryName+'/'+code);
+						                                        
+						                                        
+						                                        }
+						                                    }
+						                                ] });
+			$('#saveOptions').dialog( "option", "closeOnEscape", true );
+			$('#saveOptions').dialog( "option", "minWidth", 420 );
+			$('#saveOptions').html('<b>Query Name:</b> <input type="text" id="queryName" /><br/>'+'<b>Query Description:</b> <textarea id="queryDescription" rows="4" cols="40"></textarea><br/>');
+		
 		}
 		
-		function my_load(id){
-			editAreaLoader.setValue(id, "The content is loaded from the load_callback function into EditArea");
-		}
