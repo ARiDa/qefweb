@@ -30,6 +30,8 @@ editAreaLoader.init({
 																 		var queryDescription = $('#queryDescription').val();
 																 		
 																 		$.get('/save/'+queryName+'/'+code);
+																 		
+																 		$(this).dialog("close");
 						                                        
 						                                        
 						                                        }
