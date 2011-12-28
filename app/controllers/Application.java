@@ -36,7 +36,8 @@ public class Application extends Controller {
     public static void index() {
     	try {
 			List<QEPInfo> qeps = QEPInfo.getQEPInfo();
-			render(qeps);
+            QueryManagerRepository qmr = QueryManagerRepository.getInstance();
+			render(qeps, qmr);
 		} catch (Exception e) {
 			flash.error(e.getMessage());
 			Logger.error(e.getMessage(), e);
@@ -145,5 +146,23 @@ public class Application extends Controller {
 			index();
 		}
     }
+
+    public static void reload(Integer id) {
+    	try {
+    		if (id == null) {
+    			throw new IllegalArgumentException("Invalid plan id = " + id);
+    		}
+    		
+			QueryManager queryManager = QueryManagerRepository.getInstance().get(id, true);
+			flash.success("Plan successfully loaded in " + queryManager.getQepCreationTime() + "ms.");
+			index();
+			
+		} catch (Exception e) {
+			flash.error(e.getMessage());
+			Logger.error(e.getMessage(), e);
+			index();
+		}
+    }
     
 }
+

@@ -20,16 +20,28 @@
 	<h3>Plans</h3>
 	<table align="center">
 	<tr class="title">
+		<th>
+        </th>
 		<th>Description</th>
-		<th colspan="4">Actions</th>
+		<th colspan="5">Actions</th>
 	</tr>
 	#{list items:qeps, as:'qep' }
 	<tr class="list">
+		<td>
+        %{ cached = qmr.isLoaded(qep.id); }%
+        #{if cached}
+        	<img alt="Cached" title="Cached" src="@{'/public/images/ball-green.png'}"/>
+        #{/if}
+        #{else}
+        	<img alt="Not Cached" title="Not Cached" src="@{'/public/images/ball-gray.png'}"/>
+        #{/else}
+		</td>
 		<td>${qep.description}</td>
-		<td><a href="@{Application.show(qep.id)}" title="Show"><img alt="Show" src="@{'/public/images/show.png'}"/></a></td>
-		<td><a href="@{Application.executeQuery(qep.id, "html")}" title="HTML"><img alt="HTML" src="@{'/public/images/html.png'}"/></a></td>
-		<td><a href="@{Application.executeQuery(qep.id, "xml")}" title="XML"><img alt="XML" src="@{'/public/images/xml.png'}"/></a></td>
-		<td><a href="@{Application.executeQuery(qep.id, "json")}" title="JSON"><img alt="JSON" src="@{'/public/images/json.png'}"/></a></td>
+		<td><a href="@{Application.reload(qep.id)}" title="Reload Plan"><img alt="Reload" src="@{'/public/images/reload.gif'}"/></a></td>
+		<td><a href="@{Application.show(qep.id)}" title="Show Plan"><img alt="Show" src="@{'/public/images/show.png'}"/></a></td>
+		<td><a href="@{Application.executeQuery(qep.id, "html")}" title="Outputs query results to HTML format"><img alt="HTML" src="@{'/public/images/html.png'}"/></a></td>
+		<td><a href="@{Application.executeQuery(qep.id, "xml")}" title="Outputs query results to XML format"><img alt="XML" src="@{'/public/images/xml.png'}"/></a></td>
+		<td><a href="@{Application.executeQuery(qep.id, "json")}" title="Outputs query results to JSON format"><img alt="JSON" src="@{'/public/images/json.png'}"/></a></td>
 	</tr>
 	#{/list}
 	</table>
@@ -42,4 +54,8 @@
 		</p>
 	</div>
 </div>
+
+
+
+
 

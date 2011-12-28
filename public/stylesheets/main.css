@@ -80,6 +80,8 @@ h1,h2{
 }
 
 pre{
+  text-align:left;
+  font-size: 12px;
   color: #000;
 }
 
