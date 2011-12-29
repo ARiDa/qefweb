@@ -25,6 +25,9 @@ public class Application extends Controller {
 
 	static {
 		try {
+			String appPath = Play.applicationPath.getAbsolutePath() + "/";
+			Logger.info("App Path: " + appPath);
+			AppConfig.setRootPath(appPath);
 			// Initializes the Service
 			QueryManagerImpl.getQueryManagerImpl();
 			Logger.info("QEF - Initialized successfully");

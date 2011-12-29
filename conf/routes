@@ -10,8 +10,6 @@ GET		/reload/{id}							Application.reload
 POST	/save/?			Application.save
 GET		/results/{qep}/{format}					Application.executeQuery
 
-//qefweb.mooo.com/results?qep=13&format=html
-
 # Ignore favicon requests
 GET     /favicon.ico                            404
 
