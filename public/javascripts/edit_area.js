@@ -29,7 +29,7 @@ editAreaLoader.init({
 																 		var queryName = $('#queryName').val();
 																 		var queryDescription = $('#queryDescription').val();
 																 		
-																 		$.get('/save/'+queryName+'/'+code);
+																 		$.post('/save/', {fileName:queryName,fileContents:code});
 																 		
 																 		$(this).dialog("close");
 						                                        

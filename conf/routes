@@ -7,7 +7,7 @@ GET     /                                       Application.index
 GET		/edit/{id}								Application.edit
 GET		/show/{id}								Application.show
 GET		/reload/{id}							Application.reload
-GET		/save/{fileName}/{fileContents}			Application.save
+POST	/save/?			Application.save
 GET		/results/{qep}/{format}					Application.executeQuery
 
 //qefweb.mooo.com/results?qep=13&format=html
