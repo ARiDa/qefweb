@@ -77,17 +77,20 @@ public class Application extends Controller {
 				output = new XMLOutput("/public/xml-to-html.xsl");
 				
 			} else if (format.equals("xml")) {
-				response.setContentTypeIfNotSet("application/xml");
+				response.setContentTypeIfNotSet("application/sparql-results+xml");
+				response.setHeader("Content-Disposition", "attachment;filename=sparql-results.xml");
 				output = new XMLOutput();
 				
 			} else if (format.equals("json")) {
-				response.setContentTypeIfNotSet("application/json");
+				response.setContentTypeIfNotSet("application/sparql-results+json; charset=utf-8");
+				response.setHeader("Content-Disposition", "attachment;filename=sparql-results.json");
 				output = new JSONOutput();
 				
 			} 
 			
 			if (output != null) {
 				output.format(response.out, rs, mt);
+				
 			} else {
 				throw new IllegalArgumentException("Invalid format: " + format);
 			}

@@ -30,10 +30,10 @@
 		<td>
         %{ cached = qmr.isLoaded(qep.id); }%
         #{if cached}
-        	<img alt="Cached" title="Cached" src="@{'/public/images/ball-green.png'}"/>
+        	<img alt="Cached" title="Cached" src="@{'/public/images/green-dot.png'}"/>
         #{/if}
         #{else}
-        	<img alt="Not Cached" title="Not Cached" src="@{'/public/images/ball-gray.png'}"/>
+        	<img alt="Not Cached" title="Not Cached" src="@{'/public/images/gray-dot.png'}"/>
         #{/else}
 		</td>
 		<td>${qep.description}</td>
