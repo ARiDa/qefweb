@@ -50,6 +50,7 @@ public class Application extends Controller {
 
     public static void executeQuery(Integer qep, String format) {
 		try {
+			long startTime = System.currentTimeMillis();
 			if (format == null)
 				format = "html";
 			
@@ -58,12 +59,14 @@ public class Application extends Controller {
 				throw new IllegalArgumentException("id parameter missing or not a number.");
 			
 			QueryManager queryManager = QueryManagerRepository.getInstance().get(qep);
+			long loadPlanTime = System.currentTimeMillis();
+
 			queryManager.executeRequest();
-			
 			RequestResult result = queryManager.getRequestResult();
 			
 			Metadata mt = result.getResultMetadata();
 			ResultSet rs = result.getResultSet();
+			long executionTime = System.currentTimeMillis();
 
 			response.setHeader("Cache-Control", "no-cache");
 			response.setHeader("Pragma", "no-cache");
@@ -88,7 +91,12 @@ public class Application extends Controller {
 			} else {
 				throw new IllegalArgumentException("Invalid format: " + format);
 			}
-			Logger.info("Execute query finished successfully.");
+			long outputTime = System.currentTimeMillis();
+			
+			Logger.info("Plan(" + qep + "):" + (loadPlanTime - startTime) + 
+					" Exec:" + (executionTime - loadPlanTime) +
+					" Output(" + format + "):" + (outputTime - executionTime) + 
+					" Total:" + (outputTime - startTime) );
 			
 		} catch (Exception e) {
 			flash.error(e.getMessage());

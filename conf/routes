@@ -7,8 +7,9 @@ GET     /                                       Application.index
 GET		/edit/{id}								Application.edit
 GET		/show/{id}								Application.show
 GET		/reload/{id}							Application.reload
-POST	/save/?			Application.save
 GET		/results/{qep}/{format}					Application.executeQuery
+
+POST	/save/?									Application.save
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
