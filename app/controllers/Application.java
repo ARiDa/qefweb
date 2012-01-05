@@ -122,6 +122,7 @@ public class Application extends Controller {
 					format, (outputTime - executionTime), (outputTime - startTime));
 			
 		} catch (Exception e) {
+			Logger.error(e.toString());
 			flash.error(e.getMessage());
 			Logger.error(e.getMessage(), e);
 			index();
