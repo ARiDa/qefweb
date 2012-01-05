@@ -8,6 +8,7 @@ GET		/edit/{id}								Application.edit
 GET		/show/{id}								Application.show
 GET		/reload/{id}							Application.reload
 GET		/results/{qep}/{format}					Application.executeQuery
+GET		/params/{qep}/{format}					Application.formParams
 
 POST	/save/?									Application.save
 

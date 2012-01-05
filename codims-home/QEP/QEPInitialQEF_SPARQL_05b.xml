@@ -16,6 +16,9 @@
 		
         <op:Operator id="2" prod="3,4,5" type="">
             <Name>Union</Name>
+			<ParameterList>
+			     <useThreads>true</useThreads>
+			</ParameterList>
         </op:Operator>
 		
         <op:Operator id="3" prod="0" type="Scan" numberTuples="?">

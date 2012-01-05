@@ -16,6 +16,10 @@
 		
         <op:Operator id="2" prod="3,4" type="">
             <Name>SetBindJoin</Name>
+			<ParameterList>
+			     <useThreads>true</useThreads>
+			     <blockSize>2</blockSize>
+			</ParameterList>
         </op:Operator>
 		
         <op:Operator id="3" prod="0" type="Scan" numberTuples="?">

@@ -26,7 +26,7 @@ public class Application extends Controller {
 	static {
 		try {
 			String appPath = Play.applicationPath.getAbsolutePath() + "/";
-			Logger.info("App Path: " + appPath);
+			Logger.info("App Path: %s", appPath);
 			AppConfig.setRootPath(appPath);
 			// Initializes the Service
 			QueryManagerImpl.getQueryManagerImpl();
@@ -54,14 +54,35 @@ public class Application extends Controller {
 			if (format == null)
 				format = "html";
 			
-			Logger.info("Execute QEP " + qep + " (" + format  + ")");
+			Logger.info("Execute QEP %s (%s)", qep, format);
 			if (qep == null)
 				throw new IllegalArgumentException("id parameter missing or not a number.");
 			
 			QueryManager queryManager = QueryManagerRepository.getInstance().get(qep);
 			long loadPlanTime = System.currentTimeMillis();
 
-			queryManager.executeRequest();
+			// If query has named parameters
+			String[] paramNames = null;
+			String[] paramValues = null;
+			if (queryManager.getNamedParams() != null && queryManager.getNamedParams().size() > 0) {
+				
+				Iterator<String> it = queryManager.getNamedParams().iterator();
+				paramNames = new String[queryManager.getNamedParams().size()];
+				paramValues = new String[queryManager.getNamedParams().size()];
+				
+				for (int i=0; it.hasNext(); i++) {
+					paramNames[i] = it.next();
+					paramValues[i] = params.get(paramNames[i].substring(2)); // Do not consider '?:'
+					if (paramValues[i] == null) {
+						formParams(qep, format, queryManager.getNamedParams());
+						// throw new IllegalArgumentException("Missing named parameter " + paramNames[i]);
+					}
+				}
+				Logger.info("paramNames: %s - paramValues: %s", 
+					Arrays.toString(paramNames), Arrays.toString(paramValues));
+			}
+			
+			queryManager.executeRequest(paramNames, paramValues);
 			RequestResult result = queryManager.getRequestResult();
 			
 			Metadata mt = result.getResultMetadata();
@@ -96,10 +117,9 @@ public class Application extends Controller {
 			}
 			long outputTime = System.currentTimeMillis();
 			
-			Logger.info("Plan(" + qep + "):" + (loadPlanTime - startTime) + 
-					" Exec:" + (executionTime - loadPlanTime) +
-					" Output(" + format + "):" + (outputTime - executionTime) + 
-					" Total:" + (outputTime - startTime) );
+			Logger.info("Plan(%s):%s Exec:%s Output(%s):%s Total:%s", 
+					qep, (loadPlanTime - startTime), (executionTime - loadPlanTime), 
+					format, (outputTime - executionTime), (outputTime - startTime));
 			
 		} catch (Exception e) {
 			flash.error(e.getMessage());
@@ -109,6 +129,10 @@ public class Application extends Controller {
     	
     }
 
+    public static void formParams(Integer qep, String format, Set<String> namedParams) {
+    	render(qep, format, namedParams);
+    }
+    
     public static void show(Integer id) {
     	try {
     		QEPInfo qepInfo = QEPInfo.getQEPInfo(id);

@@ -1,0 +1,42 @@
+#{extends 'main.html' /}
+#{set title:'QEFWeb - A GUI Web Front-End to execute and manage Query Execution Plans' /}
+
+<a href="https://github.com/franzejr/qefweb" title="GitHub Repository" target="_blank"><img align="right" src="@{'/public/images/forkme.png'}" /></a>
+
+#{if flash.error}
+    <p style="color:#c00">
+        ${flash.error}
+    </p>
+#{/if}
+#{if flash.success}
+    <p style="color:#0c0">
+        ${flash.success}
+    </p>
+#{/if}
+
+<div id="content">
+<h1>QEF Web</h1>
+
+<div id="about">
+	<h3>Parameters</h3>
+
+	<form action="@{Application.executeQuery(qep, format)}">
+	#{list items:namedParams, as:'namedParam' }
+	<p>${namedParam} <input type="text" name="${namedParam.substring(2)}" /></p>
+	#{/list}
+	<p><input type="submit" value="Enviar"/></p>
+	</form>
+
+	<h3>Examples of valid parameters</h3>
+<pre>
+&lt;http://purl.org/dc/elements/1.1/creator&gt;
+"J.K. Rowling"
+42
+"abc"^^&lt;http://example.org/datatype#specialDatatype&gt;
+"cat"
+"cat"@en
+</pre>
+	</div>
+</div>
+
+<a href="@{Application.index}">Home</a>
