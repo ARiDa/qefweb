@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+     ********************************************************************************************************
+     The local Initial Query Execution Plan (QEP), ie. no remote operations
+     ********************************************************************************************************
+     helpdesk@linea.gov.br --> 
+<QEPTemplate xmlns="http://giga03.lncc.br/DIP/WP4/CoDIMS-D" xmlns:op="http://giga03.lncc.br/DIP/WP4/CoDIMS-D/Operator" xmlns:qep="http://giga03.lncc.br/DIP/WP4/CoDIMS-D/QEP">
+	
+	<qep:QEP type="Initial">
+		<op:Operator id="1" prod="2" type="">
+			<Name>Project</Name>
+			<ParameterList>
+			     <Variables>dblp_researcher, pub_title</Variables>
+			</ParameterList>
+		</op:Operator>
+		
+        <op:Operator id="2" prod="3,4" type="">
+            <Name>BindJoin</Name>
+        </op:Operator>
+		
+        <op:Operator id="3" prod="0" type="Scan" numberTuples="?">
+            <Name>Service</Name>
+            <ParameterList>
+                <DataSourceName>SparqlEndpoint</DataSourceName>
+                <ServiceURI>http://fuseki.mooo.com/dblp/sparql</ServiceURI>
+                <SPARQLQuery>
+                <![CDATA[
+					prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+					prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+					prefix owl:  <http://www.w3.org/2002/07/owl#>
+					prefix foaf: <http://xmlns.com/foaf/0.1/> 
+					prefix dc:   <http://purl.org/dc/elements/1.1/> 
+					
+					select distinct ?dblp_researcher where {
+					  ?s dc:creator ?dblp_researcher
+					} limit 100
+                ]]>
+                </SPARQLQuery>
+            </ParameterList>
+        </op:Operator>      
+
+        <op:Operator id="4" prod="0" type="Scan" numberTuples="?">
+            <Name>Service</Name>
+            <ParameterList>
+                <DataSourceName>SparqlEndpoint</DataSourceName>
+                <ServiceURI>http://fuseki.mooo.com/dblp/sparql</ServiceURI>
+                <SPARQLQuery>
+                <![CDATA[
+                  prefix dc:   <http://purl.org/dc/elements/1.1/>
+                                   
+                  select * where { 
+                    ?publication dc:creator ?dblp_researcher .
+                    ?publication dc:title ?pub_title
+                  }
+                ]]>
+                </SPARQLQuery>
+            </ParameterList>
+        </op:Operator>      
+		
+	</qep:QEP>
+</QEPTemplate>

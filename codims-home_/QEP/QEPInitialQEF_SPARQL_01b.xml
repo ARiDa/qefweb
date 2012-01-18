@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+     ********************************************************************************************************
+     The local Initial Query Execution Plan (QEP), ie. no remote operations
+     ********************************************************************************************************
+     helpdesk@linea.gov.br --> 
+<QEPTemplate xmlns="http://giga03.lncc.br/DIP/WP4/CoDIMS-D" xmlns:op="http://giga03.lncc.br/DIP/WP4/CoDIMS-D/Operator" xmlns:qep="http://giga03.lncc.br/DIP/WP4/CoDIMS-D/QEP">
+	
+	<qep:QEP type="Initial">
+		<op:Operator id="1" prod="2" type="">
+			<Name>Project</Name>
+			<ParameterList>
+			     <Variables>s</Variables>
+			</ParameterList>
+		</op:Operator>
+		
+        <op:Operator id="2" prod="0" type="Scan" numberTuples="?">
+            <Name>Service</Name>
+            <ParameterList>
+                <DataSourceName>SparqlEndpoint</DataSourceName>
+                <ServiceURI>http://fuseki.mooo.com/books/sparql</ServiceURI>
+                <SPARQLQuery>select * where { ?s ?:p ?:o } limit 30</SPARQLQuery>
+            </ParameterList>
+        </op:Operator>      
+		
+	</qep:QEP>
+</QEPTemplate>

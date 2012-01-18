@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QEPTemplate xmlns:op="http://giga03.lncc.br/DIP/WP4/CoDIMS-D/Operator" 
+             xmlns:qep="http://giga03.lncc.br/DIP/WP4/CoDIMS-D/QEP">
+
+	<qep:QEP type="Initial">
+        <op:Operator id="1" prod="2,3" type="">
+            <Name>SetBindJoin</Name>
+			<ParameterList>
+			     <useThreads>true</useThreads>
+			     <blockSize>10</blockSize>
+			</ParameterList>
+        </op:Operator>
+		
+        <op:Operator id="2" prod="0" type="Scan" numberTuples="?">
+            <Name>Service</Name>
+            <ParameterList>
+                <DataSourceName>SparqlEndpoint</DataSourceName>
+                <ServiceURI>http://www4.wiwiss.fu-berlin.de/diseasome/sparql</ServiceURI>
+                <SPARQLQuery>
+				<![CDATA[
+				PREFIX dsome: <http://www4.wiwiss.fu-berlin.de/diseasome/resource/diseasome/>
+
+				SELECT * WHERE { 
+					?:ds dsome:possibleDrug ?dg .
+				}
+				]]>
+                </SPARQLQuery>
+            </ParameterList>
+        </op:Operator>      
+
+        <op:Operator id="3" prod="0" type="Scan" numberTuples="?">
+            <Name>Service</Name>
+            <ParameterList>
+                <DataSourceName>SparqlEndpoint</DataSourceName>
+                <ServiceURI>http://www4.wiwiss.fu-berlin.de/dailymed/sparql</ServiceURI>
+                <SPARQLQuery>
+                <![CDATA[
+				PREFIX dsome: <http://www4.wiwiss.fu-berlin.de/diseasome/resource/diseasome/>
+				PREFIX dmed: <http://www4.wiwiss.fu-berlin.de/dailymed/resource/dailymed/>
+
+				SELECT * WHERE { 
+					?dg dmed:fullName ?dgn .
+				}
+                ]]>
+                </SPARQLQuery>
+            </ParameterList>
+        </op:Operator>      
+		
+	</qep:QEP>
+</QEPTemplate>

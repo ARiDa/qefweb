@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QEPTemplate xmlns:op="http://giga03.lncc.br/DIP/WP4/CoDIMS-D/Operator" 
+             xmlns:qep="http://giga03.lncc.br/DIP/WP4/CoDIMS-D/QEP">
+	
+	<qep:QEP type="Initial">
+		<op:Operator id="1" prod="2" type="">
+			<Name>Project</Name>
+			<ParameterList>
+			     <Variables>dgn, dg_act_ing, dg_mtb, dg_frm, sd_eff</Variables>
+			</ParameterList>
+		</op:Operator>
+		
+        <op:Operator id="2" prod="3,4" type="">
+            <Name>BindLeftJoin</Name>
+        </op:Operator>
+
+        <op:Operator id="3" prod="5,6" type="">
+            <Name>BindLeftJoin</Name>
+        </op:Operator>
+
+        <op:Operator id="4" prod="0" type="Scan" numberTuples="?">
+            <Name>Service</Name>
+            <ParameterList>
+                <DataSourceName>SparqlEndpoint</DataSourceName>
+                <ServiceURI>http://dbpedia.org/sparql</ServiceURI>
+                <SPARQLQuery>
+                <![CDATA[
+				PREFIX dbpprop: <http://dbpedia.org/property/>
+
+				select * where { 
+					?sa dbpprop:metabolism ?dg_mtb .				
+				}
+                ]]>
+                </SPARQLQuery>
+            </ParameterList>
+        </op:Operator>      
+
+        <op:Operator id="5" prod="7,8" type="">
+            <Name>SetBindJoin</Name>
+			<ParameterList>
+			     <useThreads>true</useThreads>
+			     <blockSize>10</blockSize>
+			</ParameterList>
+        </op:Operator>
+		
+        <op:Operator id="6" prod="0" type="Scan" numberTuples="?">
+            <Name>Service</Name>
+            <ParameterList>
+                <DataSourceName>SparqlEndpoint</DataSourceName>
+                <ServiceURI>http://www4.wiwiss.fu-berlin.de/sider/sparql</ServiceURI>
+                <SPARQLQuery>
+                <![CDATA[
+				PREFIX sider: <http://www4.wiwiss.fu-berlin.de/sider/resource/sider/>
+
+				select * where { 
+					?sa sider:sideEffect ?se .
+					?se sider:sideEffectName ?sd_eff .
+				}
+                ]]>
+                </SPARQLQuery>
+            </ParameterList>
+        </op:Operator>      
+
+        <op:Operator id="7" prod="0" type="Scan" numberTuples="?">
+            <Name>Service</Name>
+            <ParameterList>
+                <DataSourceName>SparqlEndpoint</DataSourceName>
+                <ServiceURI>http://www4.wiwiss.fu-berlin.de/dailymed/sparql</ServiceURI>
+                <SPARQLQuery>
+                <![CDATA[
+				PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+				PREFIX owl: <http://www.w3.org/2002/07/owl#>
+				PREFIX dmed: <http://www4.wiwiss.fu-berlin.de/dailymed/resource/dailymed/>
+
+				select * where {
+					?:dg  dmed:fullName ?dgn ;
+						  dmed:activeIngredient ?dgai ;
+						  dmed:genericDrug ?gdg ;
+						  owl:sameAs ?sa .
+					?dgai rdfs:label ?dg_act_ing .
+				}
+                ]]>
+                </SPARQLQuery>
+            </ParameterList>
+        </op:Operator>      
+
+        <op:Operator id="8" prod="0" type="Scan" numberTuples="?">
+            <Name>Service</Name>
+            <ParameterList>
+                <DataSourceName>SparqlEndpoint</DataSourceName>
+                <ServiceURI>http://www4.wiwiss.fu-berlin.de/drugbank/sparql</ServiceURI>
+                <SPARQLQuery>
+                <![CDATA[
+				PREFIX dgbank: <http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugbank/>
+
+				select * where {
+					?gdg dgbank:chemicalFormula  ?dg_frm .
+				}
+                ]]>
+                </SPARQLQuery>
+            </ParameterList>
+        </op:Operator>      
+		
+	</qep:QEP>
+</QEPTemplate>

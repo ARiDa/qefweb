@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+     ********************************************************************************************************
+     The local Initial Query Execution Plan (QEP), ie. no remote operations
+     ********************************************************************************************************
+     helpdesk@linea.gov.br --> 
+<QEPTemplate xmlns="http://giga03.lncc.br/DIP/WP4/CoDIMS-D" xmlns:op="http://giga03.lncc.br/DIP/WP4/CoDIMS-D/Operator" xmlns:qep="http://giga03.lncc.br/DIP/WP4/CoDIMS-D/QEP">
+	
+	<qep:QEP type="Initial">
+		<op:Operator id="1" prod="2" type="">
+			<Name>Project</Name>
+			<ParameterList>
+			</ParameterList>
+		</op:Operator>
+
+		<op:Operator id="2" prod="6,3" type="">
+			<Name>Eddy</Name>
+			<ParameterList>
+				<LoadSize>3500</LoadSize>
+				<Reload>1500</Reload>
+				<MaxIteration>10</MaxIteration>
+				<Total>1000</Total>
+                                <ExecutionMode>1</ExecutionMode>
+			</ParameterList>
+		</op:Operator>
+
+		<op:Operator id="3" prod="4" type="" parallelizable ="true">
+			<Name>Project</Name>
+			<ParameterList>
+				<RemovedAttributes>TETRAEDRO.ID,TETRAEDRO.VERTICES,VELOCIDADE.VETOR,VELOCIDADE.IDTEMPO</RemovedAttributes>
+			</ParameterList>
+		</op:Operator>
+
+		<op:Operator id="4" prod="5" type="" parallelizable ="true">
+			<Name>TCP</Name>
+			<ParameterList>
+			</ParameterList>
+		</op:Operator>
+
+		<op:Operator id="5" prod="2" type="" parallelizable ="true">
+			<Name>Unfold</Name>
+			<ParameterList>
+				<ColumnName>Tetraedro.vertices</ColumnName>
+				<BufferSize>20</BufferSize>
+				<NewType>POINT</NewType>
+			</ParameterList>
+		</op:Operator>
+
+		<op:Operator id="6" prod="0" type="Scan" numberTuples="?">
+			<Name>Scan</Name>
+			<ParameterList>
+				<DataSourceName>Particula</DataSourceName>
+				<DataSourceType>BinaryFile</DataSourceType>
+				<NumberOfColums>2</NumberOfColums>
+			</ParameterList>
+		</op:Operator>
+
+	</qep:QEP>
+</QEPTemplate>

@@ -10,7 +10,7 @@
 		<op:Operator id="1" prod="2" type="">
 			<Name>Project</Name>
 			<ParameterList>
-			     <Variables>name, name_syn, name_pred, dt, reg</Variables>
+			     <Variables>name, name_syn, name_pred</Variables>
 			</ParameterList>
 		</op:Operator>
 		

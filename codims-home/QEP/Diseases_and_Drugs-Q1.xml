@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QEPTemplate xmlns:op="http://giga03.lncc.br/DIP/WP4/CoDIMS-D/Operator" 
+             xmlns:qep="http://giga03.lncc.br/DIP/WP4/CoDIMS-D/QEP">
+
+	<qep:QEP type="Initial">
+
+        <op:Operator id="1" prod="0" type="Scan" numberTuples="?">
+            <Name>Service</Name>
+            <ParameterList>
+                <DataSourceName>SparqlEndpoint</DataSourceName>
+                <ServiceURI>http://www4.wiwiss.fu-berlin.de/diseasome/sparql</ServiceURI>
+                <SPARQLQuery>
+				<![CDATA[
+				PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+				PREFIX dsome: <http://www4.wiwiss.fu-berlin.de/diseasome/resource/diseasome/>
+
+				SELECT ?ds ?dsn
+				WHERE {
+					 ?ds dsome:name ?dsn .
+					 FILTER regex(?dsn, ?:dsname, "i")
+				} 
+				ORDER BY ?dsn
+				LIMIT 100
+				]]>
+				</SPARQLQuery>
+            </ParameterList>
+        </op:Operator>      
+		
+	</qep:QEP>
+</QEPTemplate>
