@@ -212,7 +212,7 @@ public class Application extends Controller {
 		} catch (Exception e) {
 			flash.error(e.getMessage());
 			Logger.error(e.getMessage(), e);
-			index();
+			index(); 
 		}
     }
     public static void queryDiseasesOccurrences(){
