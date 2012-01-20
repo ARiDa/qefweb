@@ -3,9 +3,22 @@ package controllers;
 import play.*;
 import play.mvc.*;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.*;
+
+import models.JsonModelBinding;
+import models.JsonModelBindingDrug;
+import models.JsonModelInitial;
+import models.JsonModelInitialDrug;
+
+import com.google.gson.Gson;
 
 import ch.epfl.codimsd.config.AppConfig;
 import ch.epfl.codimsd.exceptions.CodimsException;
@@ -202,6 +215,191 @@ public class Application extends Controller {
 			index();
 		}
     }
+    public static void queryDiseasesOccurrences(){
+    	render();
+    }
+    
+public static void sendDiseasesResults(String url) {
+		
+		BufferedReader bis = null;
+		InputStream is = null;
+		Gson gson = new Gson();
+		JsonModelBinding jmb = new JsonModelBinding();
+		List<JsonModelBinding> mylists = null;
+		String name = " ";
+		// deserialização do JSON
+		try {
+			
+			
+			URL site = new URL(
+					"http://qefweb.mooo.com/results/21/json?dsname=%22" + url
+							+ "%22");
+
+			BufferedReader read = new BufferedReader(new InputStreamReader(site.openStream()));
+			String arquivo = read.readLine();
+			String inputLine;
+			String jsonstring = "{";
+			while ((inputLine = read.readLine()) != null) {
+				
+				jsonstring = jsonstring+inputLine;
+			}
+			read.close();
+			
+			
+			// teste
+			BufferedReader br = new BufferedReader(new StringReader(jsonstring)); 
+			//FileReader(	"/home/macedo/Desktop/query.json"));
+
+			JsonModelInitial jsonresult = gson.fromJson(br,
+					JsonModelInitial.class);
+
+			// System.out.println();
+			mylists = (ArrayList<JsonModelBinding>) jsonresult.results.bindings
+					.clone();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (bis != null) {
+				try {
+					bis.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (is != null) {
+				try {
+					is.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		render(mylists);
+	}
+
+	public static void sendDrugsResults(String diseaseName) {
+		BufferedReader bis = null;
+		InputStream is = null;
+		Gson gson = new Gson();
+		JsonModelBinding jmb = new JsonModelBinding();
+		List<JsonModelBindingDrug> mylistdiseases = null;
+		String name = " ";
+		// deserialização do JSON
+		try {
+			URLConnection connection = new URL(
+					"http://qefweb.mooo.com/results/11/json/sparql-results.json")
+					.openConnection();
+			System.out.println("espere um momento");
+			
+
+			URL url = new URL(
+					"http://qefweb.mooo.com/results/22/json?ds=%22" + diseaseName
+							+ "%22");
+
+			BufferedReader read = new BufferedReader(new InputStreamReader(
+					url.openStream()));
+			String arquivo = read.readLine();
+			String inputLine;
+			String jsonstring = "{";
+			while ((inputLine = read.readLine()) != null) {
+				
+				jsonstring = jsonstring+inputLine;
+			}
+			read.close();
+			//System.out.println(jsonstring);
+
+			// quando é obtido o arquivo Json
+			BufferedReader br = new BufferedReader(new StringReader(jsonstring));  
+			//FileReader("/home/macedo/Desktop/sparql-results.json"));
+
+			// convert the json string back to object
+			JsonModelInitialDrug jresult = gson
+					.fromJson(br, JsonModelInitialDrug.class);
+
+			mylistdiseases = (ArrayList<JsonModelBindingDrug>) jresult.results.bindings
+					.clone();
+
+			
+			
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (bis != null) {
+				try {
+					bis.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (is != null) {
+				try {
+					is.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		render(mylistdiseases);
+	}
+
+	public static void showDrugDetails(String drugName) {
+		BufferedReader bis = null;
+		InputStream is = null;
+		Gson gson = new Gson();
+		JsonModelBinding jmb = new JsonModelBinding();
+		List<JsonModelBinding> mylistsdrugs = null;
+		String name = " ";
+		// deserialização do JSON
+		try {
+			
+			
+			URL site = new URL(
+					"http://qefweb.mooo.com/results/23/json?dg=%22" + drugName
+							+ "%22");
+
+			BufferedReader read = new BufferedReader(new InputStreamReader(site.openStream()));
+			String arquivo = read.readLine();
+			String inputLine;
+			String jsonstring = "{";
+			while ((inputLine = read.readLine()) != null) {
+				
+				jsonstring = jsonstring+inputLine;
+			}
+			read.close();
+			
+			BufferedReader br = new BufferedReader(new StringReader(jsonstring)); 
+			//FileReader(	"/home/macedo/Desktop/query.json"));
+
+			JsonModelInitial jsonresult = gson.fromJson(br,
+					JsonModelInitial.class);
+
+			mylistsdrugs = (ArrayList<JsonModelBinding>) jsonresult.results.bindings
+					.clone();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (bis != null) {
+				try {
+					bis.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (is != null) {
+				try {
+					is.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		render(mylistsdrugs);
+	}
     
 }
 

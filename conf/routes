@@ -9,7 +9,10 @@ GET		/show/{id}								Application.show
 GET		/reload/{id}							Application.reload
 GET		/results/{qep}/{format}					Application.executeQuery
 GET		/params/{qep}/{format}					Application.formParams
-
+GET     /queryDiseasesOccurrences               Application.queryDiseasesOccurrences
+GET     /sendDiseasesResults					Application.sendDiseasesResults
+GET     /sendDrugsResults						Application.sendDrugsResults
+GET		/showDrugDetails						Application.showDrugDetails
 POST	/save/?									Application.save
 
 # Ignore favicon requests
