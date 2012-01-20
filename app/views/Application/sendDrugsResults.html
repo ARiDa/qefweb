@@ -1,0 +1,19 @@
+#{extends 'main.html' /} 
+#{set title:'Home' /}
+
+<table>
+	<tr>
+		<p>Lista das drogas referente a doença selecionada,clique na droga desejada:</p>
+		<br> 
+	#{list items:mylistdiseases,as:'mylistdisease'}
+		<tr>
+			<td>
+				<!-- ${mylist.getDs().getValue()}-->	
+			</td>
+			<td><a href="@{showDrugDetails()}?drugName=${mylistdisease.getDsn().getValue()} ">
+					${mylistdisease.getDsn().getValue()} 
+				</a>
+			</td>
+		</tr>
+	#{/list}
+</table>
