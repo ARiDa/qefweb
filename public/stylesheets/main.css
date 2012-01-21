@@ -75,6 +75,11 @@ h1,h2{
 	margin-top:80px;
 	background:#F9F9F9;
 }	
+#cases{
+	text-align:left;
+	margin-top:80px;
+	background:#F9F9F9;
+}
 
 #content a{
   -moz-border-radius: 3px;

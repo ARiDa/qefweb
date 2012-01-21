@@ -2,10 +2,21 @@
 
 #{set title:'Home' /}
 
+#{ifErrors}
+ 
+   #{errors}
+      ${error}
+   #{/errors}
+ 
+#{/ifErrors}
+
+#{else}
+
+
 ${name}
 <table>
 	<tr>
-		<p>Lista das doenças,clique na doença desejada:</p>
+		<p> Choose the desired disease:</p>
 		<br> 
 	#{list items:mylists,as:'mylist'}
 		<tr>
@@ -19,3 +30,5 @@ ${name}
 		</tr>
 	#{/list}
 </table>
+
+#{/else}

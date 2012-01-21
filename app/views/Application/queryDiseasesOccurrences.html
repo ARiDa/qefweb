@@ -6,19 +6,13 @@
 
 #{ifErrors}
 <p class="error">Please correct these errors.</p>
-#{/ifErrors} Estudo de Caso: Dados relacionados a doenças e drogas
+#{/ifErrors} 
 
-<p>Esta seção apresenta um Estudo de caso de uma aplicação mashup na
-	area de saúde que integra dados de doencas e drogas a partir de algumas
-	fontes de dados publicamente disponíveis na Web de acordo com os
-	princípios de Linked Data. Nesse mashup a partir de uma lista de
-	doenças obtida a partir de uma busca por nome, o usuário pode obter
-	informacoes detalhadas sobre possíveis drogas usadas no tratamento de
-	uma doença específica selecionada por ele.</p>
+<p> Case Study: Drugs & Diseases<p> 
 
 <table>
 	<tr>
-		<td>#{field 'url'} <label>digite uma doença:</label>
+		<td>#{field 'url'} <label>Enter with a disease name:</label>
 		</td>
 		<td><input type="text" name="${field.name}"
 			value="${post?.title}" /></td>

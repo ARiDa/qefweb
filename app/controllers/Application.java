@@ -1,18 +1,17 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
-
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 import models.JsonModelBinding;
 import models.JsonModelBindingDrug;
@@ -20,11 +19,10 @@ import models.JsonModelBindingDrugDetails;
 import models.JsonModelInitial;
 import models.JsonModelInitialDrug;
 import models.JsonModelInitialDrugDetails;
-
-import com.google.gson.Gson;
-
+import play.Logger;
+import play.Play;
+import play.mvc.Controller;
 import ch.epfl.codimsd.config.AppConfig;
-import ch.epfl.codimsd.exceptions.CodimsException;
 import ch.epfl.codimsd.helper.FileUtils;
 import ch.epfl.codimsd.qeef.Metadata;
 import ch.epfl.codimsd.qeef.QueryManager;
@@ -36,6 +34,8 @@ import ch.epfl.codimsd.query.ResultSet;
 import ch.epfl.codimsd.query.sparql.JSONOutput;
 import ch.epfl.codimsd.query.sparql.ResultOutput;
 import ch.epfl.codimsd.query.sparql.XMLOutput;
+
+import com.google.gson.Gson;
 
 public class Application extends Controller {
 
@@ -232,8 +232,7 @@ public static void sendDiseasesResults(String url) {
 	String name = " ";
 	// deserialização do JSON
 	try {
-		
-		
+		validation.required(url);
 		URL site = new URL(
 				"http://qefweb.mooo.com/results/21/json?dsname=%22" + url
 						+ "%22");
@@ -291,7 +290,7 @@ public static void sendDiseasesResults(String url) {
 		String name = " ";
 		// deserialização do JSON
 		try {
-			/*URLConnection connection = new URL(
+			URLConnection connection = new URL(
 					"http://qefweb.mooo.com/results/11/json/sparql-results.json")
 					.openConnection();
 					
@@ -308,12 +307,12 @@ public static void sendDiseasesResults(String url) {
 				
 				jsonstring = jsonstring+inputLine;
 			}
-			read.close();*/
+			read.close();
 			//System.out.println(jsonstring);
 
 			// quando é obtido o arquivo Json
-			BufferedReader br = new BufferedReader(new //StringReader(jsonstring));  
-			FileReader("/home/macedo/Desktop/sparql-results.json"));
+			BufferedReader br = new BufferedReader(new StringReader(jsonstring));  
+			//FileReader("/home/macedo/Desktop/sparql-results.json"));
 
 			// convert the json string back to object
 			JsonModelInitialDrug jresult = gson.fromJson(br, JsonModelInitialDrug.class);
@@ -350,9 +349,9 @@ public static void sendDiseasesResults(String url) {
 		String name = " ";
 		// deserialização do JSON
 		try {
-			/*URL site = new URL(
-					"http://qefweb.mooo.com/results/23/json?dg=%22" + drugName
-							+ "%22");
+			URL site = new URL(
+					"http://qefweb.mooo.com/results/23/json?dg=<" + drugName
+							+ ">");
 
 			BufferedReader read = new BufferedReader(new InputStreamReader(site.openStream()));
 			String arquivo = read.readLine();
@@ -362,10 +361,10 @@ public static void sendDiseasesResults(String url) {
 				
 				jsonstring = jsonstring+inputLine;
 			}
-			read.close();*/
+			read.close();
 			//test
-			BufferedReader br = new BufferedReader(new //StringReader(jsonstring)); 
-			FileReader(	"/home/macedo/Desktop/query.json"));
+			BufferedReader br = new BufferedReader(new StringReader(jsonstring)); 
+			//FileReader(	"/home/macedo/Desktop/query.json"));
 
 			JsonModelInitialDrugDetails jsonresult = gson.fromJson(br,
 					JsonModelInitialDrugDetails.class);
@@ -394,6 +393,4 @@ public static void sendDiseasesResults(String url) {
 
 		render(mylistsdrugdetails);
 	}
-    
 }
-
