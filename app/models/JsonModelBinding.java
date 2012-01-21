@@ -2,7 +2,10 @@ package models;
 
 import java.util.ArrayList;
 
+import javax.persistence.Entity;
+
 import play.db.jpa.Model;
+
 
 public class JsonModelBinding extends Model {
 	 

@@ -4,20 +4,32 @@
 #{extends 'main.html' /} 
 #{set title:'Home' /}
 
-
+<p>Detalhes da droga</p>
+		<br> 
 <table>
 	<tr>
-		<p>Lista das doenças,clique na doença desejada:</p>
-		<br> 
-	#{list items:mylists,as:'mylist'}
+		
+	#{list items:mylistsdrugdetails,as:'mylistsdrugdetail'}
 		<tr>
-			<td>
-				<!-- ${mylist.getDs().getValue()}-->	
-			</td>
-			<td><a href="@{sendDrugsResults()}?diseaseName=${mylist.getDsn().getValue()} ">
-					${mylist.getDsn().getValue()} 
-				</a>
+			<td>doença:
 			</td>
 		</tr>
+		<tr>
+			<td>${mylistsdrugdetail.getDgn().getValue()}
+			</td>
+		</tr>
+		<tr>
+			<td>${mylistsdrugdetail.getDg_act_ing().getValue()}
+			</td>
+		</tr>
+		<tr>
+			<td>${mylistsdrugdetail.getDg_frm().getValue()}
+			</td>
+		</tr>
+		<tr>
+			<td>${mylistsdrugdetail.getSd_eff().getValue()}
+			</td>
+		</tr>
+		
 	#{/list}
 </table>

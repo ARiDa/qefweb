@@ -1,4 +1,6 @@
 #{extends 'main.html' /} 
+ 
+ 
 #{set title:'Home' /}
 
 <table>
@@ -8,11 +10,11 @@
 	#{list items:mylistdiseases,as:'mylistdisease'}
 		<tr>
 			<td>
-				<!-- ${mylist.getDs().getValue()}-->	
+				
 			</td>
-			<td><a href="@{showDrugDetails()}?drugName=${mylistdisease.getDsn().getValue()} ">
-					${mylistdisease.getDsn().getValue()} 
-				</a>
+			<td><a href="@{showDrugDetails()}?drugName=${mylistdisease.getDg().getValue()}">
+					${mylistdisease.getDgn().getValue()} 
+			 </a> 
 			</td>
 		</tr>
 	#{/list}

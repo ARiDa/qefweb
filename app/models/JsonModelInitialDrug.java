@@ -9,4 +9,5 @@ public class JsonModelInitialDrug extends Model {
 	public JsonModelHead head;
 	public JsonModelResultDrug results;
 	
+	
 }
