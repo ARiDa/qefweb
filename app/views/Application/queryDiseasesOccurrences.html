@@ -2,22 +2,69 @@
 #{set title:'Home' /} 
 
 
-#{form @sendDiseasesResults()}
+
+<form  name="disease" action="@{sendDiseasesResults()}" onsubmit="return validaForm()">
+
+<!-- #{form  @sendDiseasesResults()} -->
 
 #{ifErrors}
 <p class="error">Please correct these errors.</p>
 #{/ifErrors} 
-
-<p> Case Study: Drugs & Diseases<p> 
+<table>
+	<tr>
+		<td>
+			
+		</td>
+		<td>
+			<a align="left" href="http://localhost:9001" > Return to home </a>
+		</td>
+	</tr>
+</table>
+<p><b> Case Study: Drugs & Diseases</b><p> 
 
 <table>
 	<tr>
 		<td>#{field 'url'} <label>Enter with a disease name:</label>
 		</td>
-		<td><input type="text" name="${field.name}"
+		<td><input type="text" name="${field.name}" 
 			value="${post?.title}" /></td>
 		<td><span class="error">#{error 'post.title' /}</span> #{/field}
 		</td>
-		<td><input type="submit" value="submit" /> #{/form}</td>
+		<td><input type="submit" id="submit" value="submit" /> </td>
+		
 	</tr>
+	<tr>
+	</tr>
+	
 </table>
+<!-- #{/form} -->
+</form>
+	
+	<script language="JavaScript">
+	 function validaForm(){
+		  //validar nome
+		  d = document.disease;
+		  if (d.${field.name}.value == ""){
+		  alert("The text field must to be filled ");
+		  d.${field.name}.focus();
+		  return false;
+	  }
+	  return true
+	 } 
+	
+	function ValidaSemPreenchimento(form){
+				for (i=0;i<form.length;i++){
+				var obg = form[i].obrigatorio;
+				if (obg==1){
+					if (form[i].value == ""){
+						var nome = form[i].${field.name}
+						alert("O campo " + nome + " é obrigatório.")
+						form[i].focus();
+						return false
+					}
+				}
+			}
+			return true
+			}
+	</script>
+

@@ -1,34 +1,32 @@
 #{extends 'main.html' /} 
-
 #{set title:'Home' /}
 
-#{ifErrors}
- 
-   #{errors}
-      ${error}
-   #{/errors}
- 
-#{/ifErrors}
 
-#{else}
-
-
-${name}
 <table>
 	<tr>
-		<p> Choose the desired disease:</p>
-		<br> 
-	#{list items:mylists,as:'mylist'}
-		<tr>
-			<td>
-				<!-- ${mylist.getDs().getValue()}-->	
-			</td>
-			<td><a href="@{sendDrugsResults()}?diseaseName=${mylist.getDs().getValue()} ">
-					${mylist.getDsn().getValue()} 
-				</a>
-			</td>
-		</tr>
-	#{/list}
+		<td><a href="http://localhost:9001"> Return to home </a></td>
+	</tr>
 </table>
 
-#{/else}
+<table>
+	
+		<p><b>Choose the desired disease:</b></p>
+		<br>
+#{if error}
+	<tr>
+		<td><p>No results found</p></td>
+	</tr>
+#{/if} 
+	
+
+	 
+	#{else} 
+	#{list items:mylists,as:'mylist'}
+		<tr>
+			<td><a id="link" href="@{sendDrugsResults()}?diseaseName=${mylist.getDs().getValue()} ">
+					${mylist.getDsn().getValue()} </a></td>
+		</tr>
+	#{/list} 
+	#{/else}
+</table>
+
