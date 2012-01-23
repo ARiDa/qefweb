@@ -2,11 +2,38 @@
  
  
 #{set title:'Home' /}
+<table>
+	<tr>
+		<td>
+			<a  href="http://localhost:9001/sendDiseasesResults" > Previous </a>
+			
+		</td>
+	</tr>
+
+</table>
 
 <table>
 	<tr>
-		<p>Those are the correspondence Drugs. Please, choose the desired drug :</p>
-		<br> 
+		<td>
+			<a  href="http://localhost:9001" > Return to home </a>
+		</td>
+	</tr>
+
+</table>
+
+
+<table>
+<p>Those are the correspondence Drugs. Please, choose the desired drug :</p>
+<br>
+#{if error}
+	<tr>
+		<td><p>No results found</p></td>
+	</tr>
+#{/if} 
+	
+
+	#{else}
+		
 	#{list items:mylistdiseases,as:'mylistdisease'}
 		<tr>
 			<td>
@@ -18,4 +45,6 @@
 			</td>
 		</tr>
 	#{/list}
+	#{/else}
+	
 </table>
