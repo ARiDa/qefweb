@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -36,6 +37,7 @@ import ch.epfl.codimsd.query.sparql.ResultOutput;
 import ch.epfl.codimsd.query.sparql.XMLOutput;
 
 import com.google.gson.Gson;
+import com.mchange.v2.resourcepool.TimeoutException;
 
 public class Application extends Controller {
 
@@ -229,13 +231,11 @@ public static void sendDiseasesResults(String url) {
 	Gson gson = new Gson();
 	JsonModelBinding jmb = new JsonModelBinding();
 	List<JsonModelBinding> mylists = null;
-	String name = " ";
+	boolean error = true;
+	
 	// deserialização do JSON
 	try {
-		validation.required(url);
-		URL site = new URL(
-				"http://qefweb.mooo.com/results/21/json?dsname=%22" + url
-						+ "%22");
+		URL site = new URL("http://qefweb.mooo.com/results/21/json?dsname=%22"+url+ "%22");
 
 		BufferedReader read = new BufferedReader(new InputStreamReader(site.openStream()));
 		String arquivo = read.readLine();
@@ -259,9 +259,14 @@ public static void sendDiseasesResults(String url) {
 		mylists = (ArrayList<JsonModelBinding>) jsonresult.results.bindings
 				.clone();
 
-	} catch (IOException e) {
-		e.printStackTrace();
-	} finally {
+	}catch (NullPointerException te) {
+		render(error);
+	}catch (IOException te) {
+		render(error);
+	}catch (IndexOutOfBoundsException te) {
+		render(error);
+	}
+	finally {
 		if (bis != null) {
 			try {
 				bis.close();
@@ -276,10 +281,11 @@ public static void sendDiseasesResults(String url) {
 				e.printStackTrace();
 			}
 		}
-	}
-
+		
+		
 	render(mylists);
 	}
+}
 
 	public static void sendDrugsResults(String diseaseName) {
 		BufferedReader bis = null;
@@ -287,7 +293,7 @@ public static void sendDiseasesResults(String url) {
 		Gson gson = new Gson();
 		JsonModelBinding jmb = new JsonModelBinding();
 		List<JsonModelBindingDrug> mylistdiseases = null;
-		String name = " ";
+		boolean error = true;
 		// deserialização do JSON
 		try {
 			URLConnection connection = new URL(
@@ -295,11 +301,12 @@ public static void sendDiseasesResults(String url) {
 					.openConnection();
 					
 			URL url = new URL(
-					"http://qefweb.mooo.com/results/22/json?ds=<" + diseaseName
-							+ ">");
+					"http://qefweb.mooo.com/results/22/json?ds=<"+ diseaseName+">");
 
 			BufferedReader read = new BufferedReader(new InputStreamReader(
 					url.openStream()));
+			
+			
 			String arquivo = read.readLine();
 			String inputLine;
 			String jsonstring = "{";
@@ -319,9 +326,13 @@ public static void sendDiseasesResults(String url) {
 
 			mylistdiseases = (ArrayList<JsonModelBindingDrug>)jresult.results.bindings.clone();
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
+		} catch (NullPointerException te) {
+			render(error);
+		}catch (IOException te) {
+			render(error);
+		}catch (IndexOutOfBoundsException te) {
+			render(error);
+		}finally {
 			if (bis != null) {
 				try {
 					bis.close();
@@ -346,12 +357,11 @@ public static void sendDiseasesResults(String url) {
 		Gson gson = new Gson();
 		JsonModelBinding jmb = new JsonModelBinding();
 		List<JsonModelBindingDrugDetails> mylistsdrugdetails = null;
-		String name = " ";
+		boolean error = true;
 		// deserialização do JSON
 		try {
 			URL site = new URL(
-					"http://qefweb.mooo.com/results/23/json?dg=<" + drugName
-							+ ">");
+					"http://qefweb.mooo.com/results/23/json?dg=<"+drugName+">");
 
 			BufferedReader read = new BufferedReader(new InputStreamReader(site.openStream()));
 			String arquivo = read.readLine();
@@ -362,6 +372,8 @@ public static void sendDiseasesResults(String url) {
 				jsonstring = jsonstring+inputLine;
 			}
 			read.close();
+			
+			//System.out.println(jsonstring);
 			//test
 			BufferedReader br = new BufferedReader(new StringReader(jsonstring)); 
 			//FileReader(	"/home/macedo/Desktop/query.json"));
@@ -372,9 +384,13 @@ public static void sendDiseasesResults(String url) {
 			mylistsdrugdetails = (ArrayList<JsonModelBindingDrugDetails>) jsonresult.results.bindings
 					.clone();
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
+		} catch (NullPointerException te) {
+			render(error);
+		}catch (IOException te) {
+			render(error);
+		}catch (IndexOutOfBoundsException te) {
+			render(error);
+		}finally {
 			if (bis != null) {
 				try {
 					bis.close();

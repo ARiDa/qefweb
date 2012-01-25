@@ -1,35 +1,44 @@
 #{extends 'main.html' /} 
-#{set title:'Home' /}
+#{set title:'Home' /} 
 
-#{extends 'main.html' /} 
-#{set title:'Home' /}
-
-<p>Drug Details</p>
-		<br> 
 <table>
 	<tr>
-		
-	#{list items:mylistsdrugdetails,as:'mylistsdrugdetail'}
-		<tr>
-			<td>
-			</td>
-		</tr>
-		<tr>
-			<td>${mylistsdrugdetail.getDgn().getValue()}
-			</td>
-		</tr>
-		<tr>
-			<td>${mylistsdrugdetail.getDg_act_ing().getValue()}
-			</td>
-		</tr>
-		<tr>
-			<td>${mylistsdrugdetail.getDg_frm().getValue()}
-			</td>
-		</tr>
-		<tr>
-			<td>${mylistsdrugdetail.getSd_eff().getValue()}
-			</td>
-		</tr>
-		
-	#{/list}
+		<td><a href="@{index()}"> Return to home </a></td>
+	</tr>
+
 </table>
+
+<p><b>Drug Details</b></p>
+<br>
+	<table>
+	#{if error}
+	<tr>
+		<td><p>No results found</p></td>
+	</tr>
+	#{/if} 
+	</table>
+	#{else}
+	<table border="2">
+	<tr>
+		<td><b>Full Name:    </b></td>
+		<td>${mylistsdrugdetails.get(1).getDgn().getValue()}</td>
+	</tr>
+
+	<tr>
+		<td><b>Active Ingredient:    </b></td>
+		<td>${mylistsdrugdetails.get(1).getDg_act_ing().getValue()}</td>
+	</tr>
+	<tr>
+		<td><b> Generic Drug:    </b></td>
+		<td>${mylistsdrugdetails.get(1).getDg_frm().getValue()}</td>
+
+	</tr>
+	 <tr><td><b>Side Effect(s)    </b></td></tr>
+	#{list items:mylistsdrugdetails,as:'mylistsdrugdetail'}
+	<tr><td></td>
+		<td>${mylistsdrugdetail.getSd_eff().getValue()}</td>
+	</tr>
+	#{/list} 
+	</table>
+	#{/else}
+
