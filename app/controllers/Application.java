@@ -97,7 +97,7 @@ public class Application extends Controller {
 					}
 				}
 				Logger.info("paramNames: %s - paramValues: %s", 
-					Arrays.toString(paramNames), Arrays.toString(paramValues));
+				Arrays.toString(paramNames), Arrays.toString(paramValues));
 			}
 			
 			queryManager.executeRequest(paramNames, paramValues);
@@ -149,7 +149,7 @@ public class Application extends Controller {
     }
 
     public static void formParams(Integer qep, String format, Set<String> namedParams) {
-    	render(qep, format, namedParams);
+    	renderTemplate("Application/formParams.html", qep, format, namedParams);
     }
     
     public static void show(Integer id) {
@@ -364,11 +364,9 @@ public static void sendDiseasesResults(String url) {
 					"http://qefweb.mooo.com/results/23/json?dg=<"+drugName+">");
 
 			BufferedReader read = new BufferedReader(new InputStreamReader(site.openStream()));
-			String arquivo = read.readLine();
 			String inputLine;
-			String jsonstring = "{";
+			String jsonstring = "";
 			while ((inputLine = read.readLine()) != null) {
-				
 				jsonstring = jsonstring+inputLine;
 			}
 			read.close();
