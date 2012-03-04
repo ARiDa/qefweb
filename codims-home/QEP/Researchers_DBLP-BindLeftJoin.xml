@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
-     ********************************************************************************************************
-     The local Initial Query Execution Plan (QEP), ie. no remote operations
-     ********************************************************************************************************
-     helpdesk@linea.gov.br --> 
-<QEPTemplate xmlns="http://giga03.lncc.br/DIP/WP4/CoDIMS-D" xmlns:op="http://giga03.lncc.br/DIP/WP4/CoDIMS-D/Operator" xmlns:qep="http://giga03.lncc.br/DIP/WP4/CoDIMS-D/QEP">
+<QEPTemplate xmlns:op="http://giga03.lncc.br/DIP/WP4/CoDIMS-D/Operator" 
+			 xmlns:qep="http://giga03.lncc.br/DIP/WP4/CoDIMS-D/QEP">
 	
 	<qep:QEP type="Initial">
 		<op:Operator id="1" prod="2" type="">

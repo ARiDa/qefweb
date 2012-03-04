@@ -12,3 +12,5 @@ tmp/
 *.out
 teste.txt
 *.pid
+codims-home/logs/performances/*.log
+codims-home/logs/performances/Perf_20111227_003907.log

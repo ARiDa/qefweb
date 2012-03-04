@@ -17,7 +17,7 @@
         <op:Operator id="2" prod="3,4,5" type="">
             <Name>Union</Name>
 			<ParameterList>
-			     <useThreads>true</useThreads>
+			     <useThreads>false</useThreads>
 			</ParameterList>
         </op:Operator>
 		
@@ -71,7 +71,7 @@
 						?syn spl:taxon_popular_name ?name_syn.
 					}
 					Filter regex (?reg, "Paqueta").
-					Filter (?dt =2004 ).
+					Filter (?dt = 2004 ).
 					}
                 ]]>
                 </SPARQLQuery>
@@ -128,7 +128,7 @@
 						?pred sb:taxon_popular_name ?name_pred.
 					}
 					Filter regex (?reg, "Paqueta").
-					Filter (?dt =2004 ).
+					Filter (?dt = 2004 ).
 					}
                 ]]>
                 </SPARQLQuery>
@@ -167,7 +167,7 @@
 						?tc sco:trophic_chain_id_predator_taxon ?pred.
 						?pred sco:taxon_popular_name ?name_pred.
 						Filter regex (?reg, "Paqueta").
-						Filter (?dt =2004 ).
+						Filter (?dt = 2004 ).
 					} 
 					Union {
 						?s rdf:type sco:fish.
@@ -186,7 +186,7 @@
 						?syn sco:taxon_id_synon_taxon ?tx.
 						?syn sco:taxon_popular_name ?name_syn.
 						Filter regex (?reg, "Paqueta").
-						Filter (?dt =2004 ).
+						Filter (?dt = 2004 ).
 					}
 					}
                 ]]>
