@@ -1,5 +1,5 @@
 #!/bin/bash
-APP_DIR=/home/regis/qefweb/
+APP_DIR=/home/linkeddata/qefweb/
 DIR="$PWD"
 cd $APP_DIR
 
