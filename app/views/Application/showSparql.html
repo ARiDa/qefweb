@@ -1,0 +1,38 @@
+#{extends 'main.html' /}
+#{set title:'QEF-LD' /}
+
+<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/shThemeDefault.css'}">
+
+<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/shCore.css'}">
+
+<script language="Javascript" type="text/javascript" src="@{'/public/javascripts/shCore.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+
+<script language="Javascript" type="text/javascript" src="@{'/public/javascripts/shBrushSql.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+
+<h1>QEF-LD</h1>
+<h2>SPARQL Equivalent Query</h2>
+<a href="@{Application.index}">Home</a>
+
+#{if flash.error}
+    <p style="color:#c00">
+        ${flash.error}
+    </p>
+#{/if}
+#{if flash.success}
+    <p style="color:#0c0">
+        ${flash.success}
+    </p>
+#{/if}
+
+
+<div id="content">
+	<pre class="brush:sql" title="${fileName} - ${description}">
+		${fileContents}
+	</pre>
+</div>
+
+<a href="@{Application.index}">Home</a>
+
+<script type="text/javascript">
+     SyntaxHighlighter.all();
+</script>

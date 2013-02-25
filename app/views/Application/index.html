@@ -1,5 +1,5 @@
 #{extends 'main.html' /}
-#{set title:'QEFWeb - A GUI Web Front-End to execute and manage Query Execution Plans' /}
+#{set title:'QEF-LD' /}
 
 <a href="https://github.com/franzejr/qefweb" title="GitHub Repository" target="_blank"><img align="right" src="@{'/public/images/forkme.png'}" /></a>
 
@@ -15,7 +15,7 @@
 #{/if}
 
 <div id="content">
-	<h1>QEF Web</h1>
+	<h1>QEF-LD</h1>
 	<br/><br/><br/>
 	<h3>Query Plans</h3>
 	<table align="center">
@@ -46,17 +46,52 @@
 	#{/list}
 	</table>
 	
-	<div id="about">
+	<div class="topic">
 		<h3>About</h3>
 		<p>
-		QEFWeb - A GUI Web Front-End to execute and manage Query Execution Plans using QEF (Query Evaluation Framework).
+		QEF-LD - A Query Engine for Efficient Execution of Federated Queries on Linked Data.<br/>
+                QED-LD executes and manages Query Execution Plans using <a href="http://dexl.lncc.br/qef.html" target="_blank">QEF (Query Evaluation Framework)</a>.
 		</p>
 	</div>
+
+	<div class="topic">
+		<h3>Queries</h3>
+		<p>The Q1, Q2 and Q3 queries were designed to evaluate the join strategies, whilst queries
+Q4 and Q5 were prepared with the intention of analyzing the performance of the union operations.
+Both queries Q1 and Q2 have a single join operation, but differ principally by the amount of data returned. The Q3
+query involves two join operations and retrieves a large number of results.
+Queries Q4 and Q5, which are designed to enable the performance evaluation of union strategies, differ in the number of union operations performed.
+</p>
+
+<h4>Query Q1 (<a href="@{Application.showSparql(11)}">SPARQL equivalent query</a> / <a href="@{Application.show(11)}">QEF Query Execution Plan)</a></h4>
+<p>The query Q1 gets resources' URIs from the linkedgeodata dataset, together with their respective latitudes and longitudes obtained from the DBpedia dataset.</p>
+
+<h4>Query Q2 (<a href="@{Application.showSparql(12)}">SPARQL equivalent query</a> / <a href="@{Application.show(12)}">QEF Query Execution Plan)</a></h4>
+<p>The query Q2 gets URIs of diseases and possible drugs used to treat each disease from the diseasome data source. In addition to these data, the full names of the
+drugs used in treating each disease are obtained from the dailymed data source.</p>
+
+<h4>Query Q3 (<a href="@{Application.showSparql(13)}">SPARQL equivalent query</a> / <a href="@{Application.show(13)}">QEF Query Execution Plan)</a></h4>
+<p>The Q3 query gets, initially, the name of active pharmacological agents for some drugs in the dailymed
+dataset. From these values, Q3 checks: 1) the owl:sameAs links with sider, in order to get the side ects for each
+drug, and 2) the links dailymed:genericDrug with drugbank to retrieves chemical formulas of drugs.</p>
+
+<h4>Query Q4 (<a href="@{Application.showSparql(14)}">SPARQL equivalent query</a> / <a href="@{Application.show(14)}">QEF Query Execution Plan)</a></h4>
+<p>Query Q4 performs the union of generic names of drugs and medical treatment indications between the datasets drugbank and dailymed.</p>
+
+<h4>Query Q5 (<a href="@{Application.showSparql(15)}">SPARQL equivalent query</a> / <a href="@{Application.show(15)}">QEF Query Execution Plan)</a></h4>
+<p>The query Q5 performs the union of researchers names and their publications in the DBLP dataset.</p>
+
+	</div>
+
+	<div class="topic">
+		<h3>Source code</h3>
+		<p><a href="https://github.com/regispires/qef" target="_blank">QEF</a> and <a href="https://github.com/franzejr/qefweb" target="_blank">QEF-LD</a> source code can be downloaded from GitHub.</p>
+        </div>
 	
-	<div id="cases">
+	<div class="topic">
 		<h3>Case Study</h3>
 		<p>
-		<a href="http://localhost:9001/queryDiseasesOccurrences">click here </a>
+		<a href="@{Application.queryDiseasesOccurrences()}">click here </a>
 		</p>
 	</div>
 </div>

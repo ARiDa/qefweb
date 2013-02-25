@@ -171,7 +171,124 @@ public class Application extends Controller {
 			index();
 		}
     }
-    
+   
+    public static void showSparql(int query) {
+        String fileContents = null, fileName = null, description = null;
+	switch (query) {
+		case 11: 
+			fileName = "Q1";
+                        description = "gets resources' URIs from the linkedgeodata dataset, together with their respective latitudes and longitudes obtained from the DBpedia dataset.";
+			fileContents = 	"\nPREFIX owl: <http://www.w3.org/2002/07/owl#> \n" +
+                                       	"PREFIX geopos: <http://www.w3.org/2003/01/geo/wgs84_pos#> \n\n" +
+                                       	"SELECT ?s ?lat ?long \n" +
+					"WHERE { \n" +
+					"  SERVICE <http://virtuoso.mooo.com/lgd-dbpedia/sparql> { \n" +
+					"    ?s owl:sameAs ?geo . \n" +
+					"  } \n" +
+					"  SERVICE <http://virtuoso.mooo.com/dbpedia-geo/sparql> { \n" +
+					"    ?geo geopos:lat ?lat ; \n" +
+					"    geopos:long ?long . \n" +
+					"  } \n" +
+					"}";
+			break;
+		case 12:
+			fileName = "Q2";
+                        description = "gets URIs of diseases and possible drugs used to treat each disease from the diseasome data source. In addition to these data, the full names of the drugs used in treating each disease are obtained from the dailymed data source.";
+			fileContents =	"\nPREFIX ds: <http://www4.wiwiss.fu-berlin.de/diseasome/resource/diseasome/>\r\n" + 
+					"PREFIX dm: <http://www4.wiwiss.fu-berlin.de/dailymed/resource/dailymed/>\r\n" + 
+					"\r\n" + 
+					"SELECT DISTINCT ?ds ?dg ?dgn\r\n" + 
+					"WHERE {\r\n" + 
+					"  SERVICE <http://virtuoso.mooo.com/diseasome/sparql> {\r\n" + 
+					"    ?ds ds:possibleDrug ?dg .\r\n" + 
+					"  }\r\n" + 
+					"  SERVICE <http://virtuoso.mooo.com/dailymed/sparql> {\r\n" + 
+					"    ?dg dm:fullName ?dgn .\r\n" + 
+					"  }\r\n" + 
+					"}";
+
+			break;
+
+		case 13:
+			fileName = "Q3";
+                        description = "gets, initially, the name of active pharmacological agents for some drugs in the dailymed dataset. From these values, Q3 checks: 1) the owl:sameAs links with sider, in order to get the side ects for each drug, and 2) the links dailymed:genericDrug with drugbank to retrieves chemical formulas of drugs.";
+			fileContents = 	"\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\r\n" + 
+					"PREFIX owl: <http://www.w3.org/2002/07/owl#>\r\n" + 
+					"PREFIX dm: <http://www4.wiwiss.fu-berlin.de/dailymed/resource/dailymed/>\r\n" + 
+					"PREFIX db: <http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugbank/>\r\n" + 
+					"PREFIX sider: <http://www4.wiwiss.fu-berlin.de/sider/resource/sider/>\r\n" + 
+					"\r\n" + 
+					"SELECT ?dgain ?dgcf ?sen\r\n" + 
+					"WHERE {\r\n" + 
+					"  SERVICE <http://virtuoso.mooo.com/dailymed/sparql> {\r\n" + 
+					"    ?dg dm:activeIngredient ?dgai . \r\n" + 
+					"    ?dgai rdfs:label ?dgain .\r\n" + 
+					"    ?dg dailymed:genericDrug ?gdg .\r\n" + 
+					"    ?dg owl:sameAs ?sa .\r\n" + 
+					"  }\r\n" + 
+					"  SERVICE <http://virtuoso.mooo.com/sider/sparql> {\r\n" + 
+					"    ?sa sider:sideEffect ?se .\r\n" + 
+					"    ?se sider:sideEffectName ?sen .\r\n" + 
+					"  }\r\n" + 
+					"  SERVICE <http://virtuoso.mooo.com/drugbank/sparql> {\r\n" + 
+					"    ?gdg db:chemicalFormula ?dgcf .\r\n" + 
+					"  }\r\n" + 
+					"}";
+			break;
+		case 14:
+			fileName = "Q4";
+                        description = "performs the union of generic names of drugs and medical treatment indications between the datasets drugbank and dailymed.";
+			fileContents = 	"\nPREFIX owl: <http://www.w3.org/2002/07/owl#>\r\n" + 
+					"PREFIX db: <http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugbank/>\r\n" + 
+					"PREFIX dm: <http://www4.wiwiss.fu-berlin.de/dailymed/resource/dailymed/>\r\n" + 
+					"\r\n" + 
+					"SELECT ?gn ?indication\r\n" + 
+					"WHERE {\r\n" + 
+					"  {\r\n" + 
+					"    SERVICE <http://virtuoso.mooo.com/drugbank/sparql> {\r\n" + 
+					"      ?dn db:genericName ?gn ;\r\n" + 
+					"      db:indication ?indication.\r\n" + 
+					"    }\r\n" + 
+					"  }\r\n" + 
+					"  UNION {\r\n" + 
+					"    SERVICE <http://virtuoso.mooo.com/dailymed/sparql> {\r\n" + 
+					"      ?dn dm:name ?gn ;\r\n" + 
+					"      dm:indication ?indication .\r\n" + 
+					"    }\r\n" + 
+					"  }\r\n" + 
+					"}";
+			break;
+		case 15:
+			fileName = "Q5";
+                        description = "performs the union of researchers names and their publications in the DBLP dataset.";
+			fileContents = 	"\nPREFIX dc: <http://purl.org/dc/elements/1.1/>\r\n" + 
+					"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\r\n" + 
+					"\r\n" + 
+					"SELECT ?label ?pub_title where {\r\n" + 
+					"  {\r\n" + 
+					"    SERVICE <http://virtuoso.mooo.com/dblp/sparql> {\r\n" + 
+					"    ?publication dc:creator ?dblp_researcher ;\r\n" + 
+					"    dc:title ?pub_title .\r\n" + 
+					"    ?dblp_researcher rdfs:label ?label .\r\n" + 
+					"    FILTER regex(?label, \"^Aab\")\r\n" + 
+					"  }\r\n" + 
+					"  ...\r\n" + 
+					"  } UNION {\r\n" + 
+					"    SERVICE <http://virtuoso.mooo.com/dblp/sparql> {\r\n" + 
+					"      ?publication dc:creator ?dblp_researcher ;\r\n" + 
+					"      dc:title ?pub_title .\r\n" + 
+					"      ?dblp_researcher rdfs:label ?label .\r\n" + 
+					"      FILTER regex(?label, \"^Jab\")\r\n" + 
+					"    }\r\n" + 
+					"  }\r\n" + 
+					"}";
+			break;
+        }
+	render(fileName, description, fileContents);
+    }
+
+
+ 
     // To test: http://localhost:9001/edit/11
     public static void edit(Integer id) {
     	try {

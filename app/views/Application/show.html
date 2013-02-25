@@ -1,5 +1,5 @@
 #{extends 'main.html' /}
-#{set title:'Home' /}
+#{set title:'QEF-LD' /}
 
 <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/shThemeDefault.css'}">
 
@@ -9,7 +9,9 @@
 
 <script language="Javascript" type="text/javascript" src="@{'/public/javascripts/shBrushXml.js'}" type="text/javascript" charset="${_response_encoding}"></script>
 
-<h1>QEF Web</h1>
+<h1>QEF-LD</h1>
+<h2>QEF Query Execution Plan</h2>
+<a href="@{Application.index}">Home</a>
 
 #{if flash.error}
     <p style="color:#c00">
@@ -24,7 +26,7 @@
 
 
 <div id="content">
-	<pre class="brush: xml" title="${fileName} - ${description}">
+	<pre class="brush:xml" title="${fileName} - ${description}">
 		${fileContents}
 	</pre>
 </div>

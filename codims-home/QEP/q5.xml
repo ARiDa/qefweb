@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+     ********************************************************************************************************
+     The local Initial Query Execution Plan (QEP), ie. no remote operations
+     ********************************************************************************************************
+     helpdesk@linea.gov.br --> 
+<QEPTemplate xmlns="http://giga03.lncc.br/DIP/WP4/CoDIMS-D" xmlns:op="http://giga03.lncc.br/DIP/WP4/CoDIMS-D/Operator" xmlns:qep="http://giga03.lncc.br/DIP/WP4/CoDIMS-D/QEP">
+	
+	<qep:QEP type="Initial">
+		<op:Operator id="1" prod="2" type="">
+			<Name>Project</Name>
+			<ParameterList>
+			     <Variables>label, pub_title</Variables>
+			</ParameterList>
+		</op:Operator>
+		
+        <op:Operator id="2" prod="3,4,5,6,7" type="">
+            <Name>Union</Name>
+			<ParameterList>
+			     <useThreads>false</useThreads>
+			</ParameterList>
+        </op:Operator>
+		
+        <op:Operator id="3" prod="0" type="Scan" numberTuples="?">
+            <Name>Service</Name>
+            <ParameterList>
+                <DataSourceName>SparqlEndpoint</DataSourceName>
+                <ServiceURI>http://virtuoso.mooo.com/dblp/sparql</ServiceURI>
+                <SPARQLQuery>
+                <![CDATA[
+					prefix dc:   <http://purl.org/dc/elements/1.1/>
+					PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+					select * where {
+						?publication dc:creator ?dblp_researcher ;
+									dc:title ?pub_title .
+						?dblp_researcher rdfs:label ?label ;
+						FILTER regex(?label, "^Aab")
+					} 
+                ]]>
+                </SPARQLQuery>
+            </ParameterList>
+        </op:Operator>      
+
+        <op:Operator id="4" prod="0" type="Scan" numberTuples="?">
+            <Name>Service</Name>
+            <ParameterList>
+                <DataSourceName>SparqlEndpoint</DataSourceName>
+                <ServiceURI>http://virtuoso.mooo.com/dblp/sparql</ServiceURI>
+                <SPARQLQuery>
+                <![CDATA[
+					prefix dc:   <http://purl.org/dc/elements/1.1/>
+					PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+					select * where {
+						?publication dc:creator ?dblp_researcher ;
+									dc:title ?pub_title .
+						?dblp_researcher rdfs:label ?label ;
+						FILTER regex(?label, "^Bab")
+					} 
+                ]]>
+                </SPARQLQuery>
+            </ParameterList>
+        </op:Operator>
+              
+        <op:Operator id="5" prod="0" type="Scan" numberTuples="?">
+            <Name>Service</Name>
+            <ParameterList>
+                <DataSourceName>SparqlEndpoint</DataSourceName>
+                <ServiceURI>http://virtuoso.mooo.com/dblp/sparql</ServiceURI>
+                <SPARQLQuery>
+                <![CDATA[
+					prefix dc:   <http://purl.org/dc/elements/1.1/>
+					PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+					select * where {
+						?publication dc:creator ?dblp_researcher ;
+									dc:title ?pub_title .
+						?dblp_researcher rdfs:label ?label ;
+						FILTER regex(?label, "^Cab")
+				  } 
+                ]]>
+                </SPARQLQuery>
+            </ParameterList>
+        </op:Operator>      
+
+        <op:Operator id="6" prod="0" type="Scan" numberTuples="?">
+            <Name>Service</Name>
+            <ParameterList>
+                <DataSourceName>SparqlEndpoint</DataSourceName>
+                <ServiceURI>http://virtuoso.mooo.com/dblp/sparql</ServiceURI>
+                <SPARQLQuery>
+                <![CDATA[
+					prefix dc:   <http://purl.org/dc/elements/1.1/>
+					PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+					select * where {
+						?publication dc:creator ?dblp_researcher ;
+									dc:title ?pub_title .
+						?dblp_researcher rdfs:label ?label ;
+						FILTER regex(?label, "^Dab")
+				  } 
+                ]]>
+                </SPARQLQuery>
+            </ParameterList>
+        </op:Operator>      
+
+        <op:Operator id="7" prod="0" type="Scan" numberTuples="?">
+            <Name>Service</Name>
+            <ParameterList>
+                <DataSourceName>SparqlEndpoint</DataSourceName>
+                <ServiceURI>http://virtuoso.mooo.com/dblp/sparql</ServiceURI>
+                <SPARQLQuery>
+                <![CDATA[
+					prefix dc:   <http://purl.org/dc/elements/1.1/>
+					PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+					select * where {
+						?publication dc:creator ?dblp_researcher ;
+									dc:title ?pub_title .
+						?dblp_researcher rdfs:label ?label ;
+						FILTER regex(?label, "^Eab")
+				  } 
+                ]]>
+                </SPARQLQuery>
+            </ParameterList>
+        </op:Operator>      
+
+	</qep:QEP>
+</QEPTemplate>

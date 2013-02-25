@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+     ********************************************************************************************************
+     The local Initial Query Execution Plan (QEP), ie. no remote operations
+     ********************************************************************************************************
+     helpdesk@linea.gov.br --> 
+<QEPTemplate xmlns="http://giga03.lncc.br/DIP/WP4/CoDIMS-D" xmlns:op="http://giga03.lncc.br/DIP/WP4/CoDIMS-D/Operator" xmlns:qep="http://giga03.lncc.br/DIP/WP4/CoDIMS-D/QEP">
+	
+	<qep:QEP type="Initial">
+		<op:Operator id="1" prod="2" type="">
+			<Name>Project</Name>
+			<ParameterList>
+			     <Variables>s, lat, long</Variables>
+			</ParameterList>
+		</op:Operator>
+		
+        <op:Operator id="2" prod="3,4" type="">
+            <Name>SetBindJoin</Name>
+			<ParameterList>
+			     <maxActiveThreads>100</maxActiveThreads>
+			     <blockSize>20</blockSize>
+			</ParameterList>
+        </op:Operator>
+		
+        <op:Operator id="3" prod="0" type="Scan" numberTuples="?">
+            <Name>Service</Name>
+            <ParameterList>
+                <DataSourceName>SparqlEndpoint</DataSourceName>
+                <ServiceURI>http://virtuoso.mooo.com:8892/sparql</ServiceURI>
+                <SPARQLQuery>
+                <![CDATA[
+					PREFIX owl: <http://www.w3.org/2002/07/owl#>
+					select * where {
+						?s owl:sameAs ?geo .
+				    } LIMIT 25000
+                 ]]>
+                </SPARQLQuery>
+            </ParameterList>
+        </op:Operator>      
+
+        <op:Operator id="4" prod="0" type="Scan" numberTuples="?">
+            <Name>Service</Name>
+            <ParameterList>
+                <DataSourceName>SparqlEndpoint</DataSourceName>
+                <ServiceURI>http://virtuoso.mooo.com:8897/sparql</ServiceURI>
+                <SPARQLQuery>
+                <![CDATA[
+					PREFIX geopos: <http://www.w3.org/2003/01/geo/wgs84_pos#>					
+					select * where{
+						?geo geopos:lat ?lat ;
+						geopos:long ?long .
+					} 
+                ]]>
+                </SPARQLQuery>
+            </ParameterList>
+        </op:Operator>      
+		
+	</qep:QEP>
+</QEPTemplate>

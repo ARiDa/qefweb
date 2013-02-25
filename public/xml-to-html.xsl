@@ -167,6 +167,7 @@ Fix:
 
 
 	<h1>QEF Results</h1>
+	<p><a href="/">Home</a></p>
 
 	<xsl:if test="res:head/res:link">
 	  <xsl:call-template name="header"/>

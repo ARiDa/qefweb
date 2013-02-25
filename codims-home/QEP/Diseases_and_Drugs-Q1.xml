@@ -8,7 +8,7 @@
             <Name>Service</Name>
             <ParameterList>
                 <DataSourceName>SparqlEndpoint</DataSourceName>
-                <ServiceURI>http://www4.wiwiss.fu-berlin.de/diseasome/sparql</ServiceURI>
+                <ServiceURI>http://virtuoso.mooo.com/diseasome/sparql</ServiceURI>
                 <SPARQLQuery>
 				<![CDATA[
 				PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>

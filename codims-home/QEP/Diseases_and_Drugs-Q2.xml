@@ -4,10 +4,10 @@
 
 	<qep:QEP type="Initial">
         <op:Operator id="1" prod="2,3" type="">
-            <Name>SetBindJoin</Name>
+            <Name>BindJoin</Name>
 			<ParameterList>
-			     <useThreads>true</useThreads>
-			     <blockSize>10</blockSize>
+			     <maxActiveThreads>100</maxActiveThreads>
+                             <blockSize>57</blockSize>
 			</ParameterList>
         </op:Operator>
 		
@@ -15,7 +15,7 @@
             <Name>Service</Name>
             <ParameterList>
                 <DataSourceName>SparqlEndpoint</DataSourceName>
-                <ServiceURI>http://www4.wiwiss.fu-berlin.de/diseasome/sparql</ServiceURI>
+                <ServiceURI>http://virtuoso.mooo.com/diseasome/sparql</ServiceURI>
                 <SPARQLQuery>
 				<![CDATA[
 				PREFIX dsome: <http://www4.wiwiss.fu-berlin.de/diseasome/resource/diseasome/>
@@ -32,7 +32,7 @@
             <Name>Service</Name>
             <ParameterList>
                 <DataSourceName>SparqlEndpoint</DataSourceName>
-                <ServiceURI>http://www4.wiwiss.fu-berlin.de/dailymed/sparql</ServiceURI>
+                <ServiceURI>http://virtuoso.mooo.com/dailymed/sparql</ServiceURI>
                 <SPARQLQuery>
                 <![CDATA[
 				PREFIX dsome: <http://www4.wiwiss.fu-berlin.de/diseasome/resource/diseasome/>

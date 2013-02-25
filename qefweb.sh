@@ -1,10 +1,11 @@
 #!/bin/bash
-APP_DIR=/home/linkeddata/qefweb/
+APP_DIR=/linkeddata/apps/qefweb/
 DIR="$PWD"
 cd $APP_DIR
 
 case "$1" in
   start)
+	#play start --%prod
 	play start --%prod
         ;;
   stop)

@@ -25,7 +25,7 @@
             <Name>Service</Name>
             <ParameterList>
                 <DataSourceName>SparqlEndpoint</DataSourceName>
-                <ServiceURI>http://fuseki.mooo.com/dblp/sparql</ServiceURI>
+                <ServiceURI>http://virtuoso.mooo.com/dblp/sparql</ServiceURI>
                 <SPARQLQuery>
                 <![CDATA[
 					prefix dc:   <http://purl.org/dc/elements/1.1/> 
@@ -44,7 +44,7 @@
             <Name>Service</Name>
             <ParameterList>
                 <DataSourceName>SparqlEndpoint</DataSourceName>
-                <ServiceURI>http://fuseki.mooo.com/dblp/sparql</ServiceURI>
+                <ServiceURI>http://virtuoso.mooo.com/dblp/sparql</ServiceURI>
                 <SPARQLQuery>
                 <![CDATA[
 					prefix dc:   <http://purl.org/dc/elements/1.1/> 
@@ -63,7 +63,7 @@
             <Name>Service</Name>
             <ParameterList>
                 <DataSourceName>SparqlEndpoint</DataSourceName>
-                <ServiceURI>http://fuseki.mooo.com/dblp/sparql</ServiceURI>
+                <ServiceURI>http://virtuoso.mooo.com/dblp/sparql</ServiceURI>
                 <SPARQLQuery>
                 <![CDATA[
 					prefix dc:   <http://purl.org/dc/elements/1.1/> 

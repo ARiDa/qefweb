@@ -17,8 +17,8 @@
         <op:Operator id="2" prod="3,4" type="">
             <Name>SetBindJoin</Name>
             <ParameterList>
-              <useThreads>true</useThreads>
-              <blockSize>2</blockSize>
+              <maxActiveThreads>100</maxActiveThreads>
+              <blockSize>57</blockSize>
             </ParameterList>
         </op:Operator>
 		
@@ -26,7 +26,7 @@
             <Name>Service</Name>
             <ParameterList>
                 <DataSourceName>SparqlEndpoint</DataSourceName>
-                <ServiceURI>http://fuseki.mooo.com/diseasome/sparql</ServiceURI>
+                <ServiceURI>http://virtuoso.mooo.com/diseasome/sparql</ServiceURI>
                 <SPARQLQuery>
                 <![CDATA[
                   PREFIX diseasome: <http://www4.wiwiss.fu-berlin.de/diseasome/resource/diseasome/>
@@ -43,7 +43,7 @@
             <Name>Service</Name>
             <ParameterList>
                 <DataSourceName>SparqlEndpoint</DataSourceName>
-                <ServiceURI>http://fuseki.mooo.com/drugbank/sparql</ServiceURI>
+                <ServiceURI>http://virtuoso.mooo.com/drugbank/sparql</ServiceURI>
                 <SPARQLQuery>
                 <![CDATA[
                   PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>                  

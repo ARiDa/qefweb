@@ -14,7 +14,7 @@
             <Name>Service</Name>
             <ParameterList>
                 <DataSourceName>SparqlEndpoint</DataSourceName>
-                <ServiceURI>http://fuseki.mooo.com/books/sparql</ServiceURI>
+                <ServiceURI>http://virtuoso.mooo.com/books/sparql</ServiceURI>
                 <SPARQLQuery>select * where { ?s ?p ?o } limit 30</SPARQLQuery>
             </ParameterList>
         </op:Operator>      

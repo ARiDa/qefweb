@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+     ********************************************************************************************************
+     The local Initial Query Execution Plan (QEP), ie. no remote operations
+     ********************************************************************************************************
+     helpdesk@linea.gov.br --> 
+<QEPTemplate xmlns="http://giga03.lncc.br/DIP/WP4/CoDIMS-D" xmlns:op="http://giga03.lncc.br/DIP/WP4/CoDIMS-D/Operator" xmlns:qep="http://giga03.lncc.br/DIP/WP4/CoDIMS-D/QEP">
+	
+	<qep:QEP type="Initial">
+		<op:Operator id="1" prod="2" type="">
+			<Name>Project</Name>
+			<ParameterList>
+			     <Variables>dgain, dgcf, sen</Variables>
+			</ParameterList>
+		</op:Operator>
+
+        <op:Operator id="2" prod="3,4" type="">
+            <Name>SetBindJoin</Name>
+	    <ParameterList>
+	        <maxActiveThreads>100</maxActiveThreads>
+	        <blockSize>57</blockSize>
+	    </ParameterList>
+        </op:Operator>
+
+		
+        <op:Operator id="3" prod="5,6" type="">
+            <Name>SetBindJoin</Name>
+			<ParameterList>
+			     <maxActiveThreads>100</maxActiveThreads>
+			     <blockSize>57</blockSize>
+			</ParameterList>
+        </op:Operator>
+
+        <op:Operator id="4" prod="0" type="Scan" numberTuples="?">
+            <Name>Service</Name>
+            <ParameterList>
+                <DataSourceName>SparqlEndpoint</DataSourceName>
+                <ServiceURI>http://virtuoso.mooo.com/drugbank/sparql</ServiceURI>
+                <SPARQLQuery>
+                <![CDATA[
+					PREFIX drugbank: <http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugbank/>
+					select * where{
+                                                ?gdg drugbank:chemicalFormula  ?dgcf .
+					}
+				]]>
+                </SPARQLQuery>
+            </ParameterList>
+        </op:Operator>      
+
+		
+        <op:Operator id="5" prod="0" type="Scan" numberTuples="?">
+            <Name>Service</Name>
+            <ParameterList>
+                <DataSourceName>SparqlEndpoint</DataSourceName>
+                <ServiceURI>http://virtuoso.mooo.com/dailymed/sparql</ServiceURI>
+                <SPARQLQuery>
+                <![CDATA[
+					PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+					PREFIX owl: <http://www.w3.org/2002/07/owl#>
+					PREFIX dailymed: <http://www4.wiwiss.fu-berlin.de/dailymed/resource/dailymed/>
+					select * where{
+						?dg dailymed:activeIngredient ?dgai .
+						?dgai rdfs:label ?dgain .
+						?dg dailymed:genericDrug ?gdg .
+						?dg owl:sameAs ?sa .
+					} limit 1000
+				]]>
+                </SPARQLQuery>
+            </ParameterList>
+        </op:Operator>      
+
+        <op:Operator id="6" prod="0" type="Scan" numberTuples="?">
+            <Name>Service</Name>
+            <ParameterList>
+                <DataSourceName>SparqlEndpoint</DataSourceName>
+                <ServiceURI>http://virtuoso.mooo.com/sider/sparql</ServiceURI>
+                <SPARQLQuery>
+                <![CDATA[
+                                        PREFIX sider: <http://www4.wiwiss.fu-berlin.de/sider/resource/sider/>
+					select * where{
+                                                ?sa sider:sideEffect ?se .
+                                                ?se sider:sideEffectName ?sen .
+					}
+                ]]>
+                </SPARQLQuery>
+            </ParameterList>
+        </op:Operator>      
+		
+	</qep:QEP>
+</QEPTemplate>
